@@ -25,7 +25,7 @@ class ProductFactory extends Factory
                 'image3' => 'featured' . rand(1, 60) . '.jpg',
                 'image4' => 'featured' . rand(1, 60) . '.jpg',
                 'price' => rand(1, 10000) / 100,
-            
+                'product_category_id' => rand(1, 5),
         ];
     }
 }

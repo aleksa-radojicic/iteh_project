@@ -18,11 +18,11 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->string('image');
-            $table->string('image2');
-            $table->string('image3');
-            $table->string('image4');
-            $table->string('image5');
+            $table->string('image2')->nullable();
+            $table->string('image3')->nullable();
+            $table->string('image4')->nullable();
             $table->double('price');
+            $table->foreignId('product_category_id')->nullable();
             $table->timestamps();
         });
     }

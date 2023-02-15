@@ -26,6 +26,7 @@ class OrderResource extends JsonResource
             'user_city' => $this->resource->user_city,
             'user_address' => $this->resource->user_address,
             'date' => $this->resource->created_at,
+            'order_items' => new OrderItemCollection($this->resource->order_items) 
         ];
     }
 }

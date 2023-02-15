@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Http\Resources\UserResource;
-use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -46,20 +45,23 @@ class AuthController extends Controller
             ], 401);
         }
 
-        $user = User::where('email', $request->email)->firstOrFail();
+        $user = User::with('orders')->where('email', $request->email)->firstOrFail();
 
         $token = $user->createToken('auth_token')->plainTextToken;
+
+        $resourced_user = new UserResource($user);
 
         return response()->json([
             'message' => 'Successful login, user ' . $user->name,
             'access_token' => $token,
             'token_type' => 'Bearer',
-            'user' => new UserResource($user),
+            'user' => $resourced_user,
         ]);
     }
 
     public function logout(Request $request)
     {
+        
         $request->user()->currentAccessToken()->delete();
 
         return response()->json([

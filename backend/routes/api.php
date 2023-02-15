@@ -2,11 +2,9 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\OrderItemController;
 use App\Http\Controllers\OrderOrderItemController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\UserOrderController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,27 +18,45 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::middleware('auth:sanctum')->group(function () {
 
-    Route::resource('orders', OrderController::class)->only(['store']);
+    //WORKS
+    Route::get('user', [UserController::class, 'index']);
 
-    Route::resource('order_items', OrderItemController::class)->only(['store']);
+    //WORKS
+    //HOWEVER, VALIDATION FOR ORDERITEM HAS TO BE IMPLEMENTED
+    Route::post('orders', [OrderController::class, 'store']);
 
-    Route::resource('users.orders', UserOrderController::class)->only(['index']);
+    //WORKS
+    Route::get('order_items', [OrderOrderItemController::class, 'show']);
 
-    Route::resource('orders.order_items', OrderOrderItemController::class)->only(['index']);
+    //WORKS
+    Route::resource('products', ProductController::class)->only(['show']);
 
-    Route::resource('products', ProductController::class)->only(['index', 'show']);
+    //NEEDS TO BE IMPLEMENTED PROPERLY
+    Route::get('shop', [ProductController::class, 'showProductsPerPage']);
 
+    //WORKS
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 
 
-Route::resource('products', ProductController::class)->only(['index', 'show']);
+//WORKS
+Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function () {
+
+    //WORKS
+    Route::get('orders', [OrderController::class, 'index']);
+
+    //WORKS
+    Route::get('products', [ProductController::class, 'index']);
+    //WORKS
+    Route::post('products', [ProductController::class, 'store']);
+    //WORKS (x-www-form)
+    Route::put('products/{id}', [ProductController::class, 'update']);
+});
+
+//EVERYTHING BELOW WORKS
+Route::resource('products', ProductController::class)->only(['show']);
 
 Route::get('/login', function () {
     return response()->json('Please log in');

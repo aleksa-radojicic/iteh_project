@@ -6,6 +6,8 @@ use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -16,13 +18,31 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::get();
+        $products = Product::with('product_category')->get();
 
         if ($products) {
             return new ProductCollection($products);
         }
         return response()->json('Products not found', 404);
     }
+
+
+    //MORE WORK NEEDS TO BE DONE HERE
+    public function showProductsPerPage($offset, $total_records_per_page)
+    {
+
+
+        // $number_of_products = Product::count();
+
+        $products = DB::table('products')->skip($offset)->take($total_records_per_page)->get();
+
+        if ($products) {
+            return new ProductCollection($products);
+        }
+        return response()->json('Products not found', 404);
+    }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -42,7 +62,31 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string',
+            'description' => 'required|string|max:100',
+            'price' => 'required',
+            'image' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        }
+
+        Product::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'image' => $request->image,
+            'image2' => $request->image2,
+            'image3' => $request->image3,
+            'image4' => $request->image4,
+            'price' => $request->price,
+            'product_category_id' => $request->product_category_id,
+        ]);
+
+        return response()->json([
+            'message' => 'Successfully created a product',
+        ]);
     }
 
     /**
@@ -84,7 +128,31 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string',
+            'description' => 'required|string|max:100',
+            'price' => 'required',
+            'image' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        }
+
+        $product->name = $request->name;
+        $product->description = $request->description;
+        $product->image = $request->image;
+        $product->image2 = $request->image2;
+        $product->image3 = $request->image3;
+        $product->image4 = $request->image4;
+        $product->price = $request->price;
+        $product->product_category_id = $request->product_category_id;
+
+        $product->save();
+
+        return response()->json([
+            'message' => 'Successfully updated the product',
+        ]);
     }
 
     /**
