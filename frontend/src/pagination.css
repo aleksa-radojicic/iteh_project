@@ -1,0 +1,9 @@
+.pagination a {
+  color: coral;
+}
+
+.pagination li:hover a {
+  color: #fff;
+  background-color: coral;
+  cursor: pointer;
+}

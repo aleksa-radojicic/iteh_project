@@ -1,0 +1,6 @@
+.product img {
+    width: auto;
+    height: 200px;
+    box-sizing: border-box;
+    object-fit: cover;
+  }
