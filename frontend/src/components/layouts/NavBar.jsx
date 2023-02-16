@@ -1,8 +1,26 @@
+import axios from "axios";
 import React from "react";
 import { Link } from "react-router-dom";
 
 
-function NavBar() {
+function NavBar({ token }) {
+  function handleLogout() {
+    var config = {
+      method: "post",
+      url: 'api/logout',
+      headers: {
+        Authorization: "Bearer " + window.sessionStorage.getItem("auth_token"),
+      },
+    };
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+        window.sessionStorage.setItem("auth_token", null);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-white py-3 mb-2 fixed-top">
       <div className="container">
@@ -29,20 +47,37 @@ function NavBar() {
             <li className="nav-item">
               <a className="nav-link" href="contact.php">Contact Us</a>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/login">
-                Login
-              </Link>
-            </li>
+            {token == null ? (
+              <li className="nav-item">
+                <Link className="nav-link" to="/login">
+                  Login
+                </Link>
+              </li>
+            )
+              : (
+                <>
+                  <li className="nav-item">
+                    <a className="nav-link" href="/" onClick={handleLogout}>
+                      Logout
+                    </a>
+                  </li>
+
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/account">
+                      <i className="fas fa-user"></i>
+                    </Link>
+                  </li>
+                </>
+              )
+            }
+
 
 
             <li className="nav-item">
               <a href="localhost:3000">
                 <i className="fas fa-shopping-cart"></i>
               </a>
-              <a href="localhost:3000">
-                <i className="fas fa-user"></i>
-              </a>
+
             </li>
 
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from "axios";
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-const Login = ({ logged_user, on_login }) => {
+const Login = ({ logged_user, on_login, addToken }) => {
     let navigate = useNavigate();
     const [user, setUser] = useState({
         email: "",
@@ -20,7 +20,7 @@ const Login = ({ logged_user, on_login }) => {
             // console.log(res.data);
             if (res.data.success === true) {
                 window.sessionStorage.setItem('auth_token', res.data.access_token);
-
+                addToken(res.data.access_token);
                 console.log("SUCCESS");
                 console.log(res.data.user);
                 on_login(res.data.user);

@@ -9,10 +9,12 @@ import Shop from "./components/shop-page/Shop";
 import SingleProduct from "./components/single-product-page/SingleProduct";
 import Login from "./components/login-page/Login";
 import Register from "./components/register-page/Register";
+import Account from "./components/account-page/Account";
 //number of products shown on a single page
 const page_size = 1;
 
 function App() {
+  const [token, setToken] = useState(null);
   const products = [
     {
       id: 1,
@@ -146,10 +148,12 @@ function App() {
 
     return products.slice(first_page_index, last_page_index);
   }, [current_page]);
-
+  function addToken(auth_token) {
+    setToken(auth_token);
+  }
   return (
     <BrowserRouter>
-      <NavBar />
+      <NavBar token={token} />
 
       <Routes>
         <Route path="/" element={<Index />} />
@@ -174,8 +178,11 @@ function App() {
           element={<SingleProduct products={products} />}
         />
         <Route path="/login" element={<Login logged_user={logged_user}
-          on_login={setLoggedUser} />} />
+          on_login={setLoggedUser} addToken={addToken} />} />
         <Route path="/register" element={<Register />} />
+
+        <Route path="/account" element={<Account user={logged_user} />} />
+
       </Routes>
 
       <Footer />
