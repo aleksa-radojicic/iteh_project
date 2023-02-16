@@ -6,7 +6,7 @@ function NavBar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-white py-3 mb-2 fixed-top">
       <div className="container">
-        <img className="logo" src={require("../../images/logo.jpg")} />
+        <img className="logo" src={require("../../images/logo.jpg")} alt="logo" />
         <button
           className="navbar-toggler"
           type="button"
@@ -32,7 +32,7 @@ function NavBar() {
             </li>
 
             <li className="nav-item">
-              <a className="nav-link" href="#">
+              <a className="nav-link" href="localhost:3000">
                 Blog
               </a>
             </li>
@@ -42,19 +42,25 @@ function NavBar() {
                 Contact Us
               </Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/login">
+                Login
+              </Link>
+            </li>
+
 
             <li className="nav-item">
-              <a href="#">
+              <a href="localhost:3000">
                 <i className="fas fa-shopping-cart"></i>
               </a>
-              <a href="#">
+              <a href="localhost:3000">
                 <i className="fas fa-user"></i>
               </a>
             </li>
           </ul>
         </div>
       </div>
-    </nav>
+    </nav >
   );
 }
 

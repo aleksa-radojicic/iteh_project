@@ -7,6 +7,7 @@ import Footer from "./components/layouts/Footer";
 import Contact from "./components/contact-page/Contact";
 import Shop from "./components/shop-page/Shop";
 import SingleProduct from "./components/single-product-page/SingleProduct";
+import Login from "./components/login-page/Login";
 
 //number of products shown on a single page
 const page_size = 1;
@@ -171,6 +172,7 @@ function App() {
           path="/single_product/:id"
           element={<SingleProduct products={products} />}
         />
+        <Route path="/login" element={<Login />} />
       </Routes>
 
       <Footer />
