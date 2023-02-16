@@ -54,11 +54,21 @@ const Account = ({ user }) => {
                     <tr>
                         <th>Order id</th>
                         <th>Order cost</th>
-                        <th>Order date</th>
+                        <th>User city</th>
+                        <th>User address</th>
                         <th>Order details</th>
                     </tr>
-
-                    <tr>
+                    {user.orders.map(item => {
+                        return (
+                            <tr key={item.id}>
+                                <td>{item.id}</td>
+                                <td>{item.cost}</td>
+                                <td>{item.user_city}</td>
+                                <td>{item.user_address}</td>
+                            </tr>
+                        );
+                    })}
+                    {/* <tr>
                         <td>
                             <span>{user.orders[0].id} </span>
                         </td>
@@ -68,26 +78,26 @@ const Account = ({ user }) => {
                         </td>
 
                         <td>
-                            <span>order date</span>
+                            <span></span>
                         </td>
 
                         <td>
                             <form>
                                 {/* u value order id */}
-                                <input type="hidden" value="a" name="order_id" />
-                                <input class="btn order-details-btn" name="order_details_btn"
-                                    type="submit" value="details" />
-                            </form>
-                        </td>
-                    </tr>
+                    {/* <input type="hidden" value="a" name="order_id" />
+                    <input class="btn order-details-btn" name="order_details_btn"
+                        type="submit" value="details" />
+                </form> */}
+                    {/* </td>
+        </tr> * /} */}
 
-                </table>
+                </table >
 
 
 
-            </section>
+            </section >
 
-        </div>
+        </div >
     );
 };
 

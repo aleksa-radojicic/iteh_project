@@ -45,7 +45,7 @@ function NavBar({ token }) {
             </li>
 
             <li className="nav-item">
-              <a className="nav-link" href="contact.php">Contact Us</a>
+              <Link to="/contact" className="nav-link">Contact us</Link>
             </li>
             {token == null ? (
               <li className="nav-item">
