@@ -25,6 +25,7 @@ const SingleProduct = ({ products }) => {
               className="img-fluid w-100 pb-1 mt-4"
               id="mainImg"
               src={require("../../images/" + product.image)}
+              alt="asd"
             />
             <div className="small-img-group">
               <div className="small-img-col">
@@ -32,6 +33,7 @@ const SingleProduct = ({ products }) => {
                   src={require("../../images/" + product.image)}
                   width="100%"
                   className="small-img"
+                  alt="sd"
                 />
               </div>
               <div className="small-img-col">
@@ -39,6 +41,7 @@ const SingleProduct = ({ products }) => {
                   src={require("../../images/" + product.image2)}
                   width="100%"
                   className="small-img"
+                  alt="slika3"
                 />
               </div>
               <div className="small-img-col">
@@ -46,6 +49,7 @@ const SingleProduct = ({ products }) => {
                   src={require("../../images/" + product.image3)}
                   width="100%"
                   className="small-img"
+                  alt="slika4"
                 />
               </div>
               <div className="small-img-col">
@@ -53,6 +57,7 @@ const SingleProduct = ({ products }) => {
                   src={require("../../images/" + product.image4)}
                   width="100%"
                   className="small-img"
+                  alt="small"
                 />
               </div>
             </div>

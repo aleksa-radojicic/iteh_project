@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -24,12 +25,23 @@ class AuthController extends Controller
             return response()->json($validator->errors());
         }
 
-        $user = User::create([
+        // $user = User::create([
+        //     'name' => $request->name,
+        //     'email' => $request->email,
+        //     'password' => Hash::make($request->password),
+
+        // ]);
+        User::insert([
+
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-        ]);
+            'user_type' => 'regular',
+            'remember_token' => Str::random(10),
+            'created_at' => now(),
+            'updated_at' => now()
 
+        ]);
         return response()->json([
             'message' => 'Successful registration.',
         ]);
@@ -41,8 +53,8 @@ class AuthController extends Controller
 
         if (!Auth::attempt($request->only('email', 'password'))) {
             return response()->json([
-                'message' => 'Incorrect login credentials'
-            ], 401);
+                'success' => false
+            ]);
         }
 
         $user = User::with('orders')->where('email', $request->email)->firstOrFail();
@@ -52,7 +64,7 @@ class AuthController extends Controller
         $resourced_user = new UserResource($user);
 
         return response()->json([
-            'message' => 'Successful login, user ' . $user->name,
+            'success' => true,
             'access_token' => $token,
             'token_type' => 'Bearer',
             'user' => $resourced_user,
@@ -61,7 +73,7 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        
+
         $request->user()->currentAccessToken()->delete();
 
         return response()->json([

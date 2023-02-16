@@ -8,7 +8,7 @@ import Contact from "./components/contact-page/Contact";
 import Shop from "./components/shop-page/Shop";
 import SingleProduct from "./components/single-product-page/SingleProduct";
 import Login from "./components/login-page/Login";
-
+import Register from "./components/register-page/Register";
 //number of products shown on a single page
 const page_size = 1;
 
@@ -137,7 +137,7 @@ function App() {
   ];
 
   const [current_page, setCurrentPage] = useState(1);
-
+  const [logged_user, setLoggedUser] = useState("cao");
   //using useMemo hook to improve performance (executing the
   //function only when variable current page changes)
   const products_on_current_page = useMemo(() => {
@@ -165,6 +165,7 @@ function App() {
               total_count={products.length}
               page_size={page_size}
               on_page_change={(page) => setCurrentPage(page)}
+
             />
           }
         />
@@ -172,7 +173,9 @@ function App() {
           path="/single_product/:id"
           element={<SingleProduct products={products} />}
         />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login logged_user={logged_user}
+          on_login={setLoggedUser} />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
 
       <Footer />

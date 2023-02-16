@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import axios from "axios";
-
-const Login = () => {
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+const Login = ({ logged_user, on_login }) => {
+    let navigate = useNavigate();
     const [user, setUser] = useState({
         email: "",
         password: "",
     });
-
     function handleInput(e) {
         let newUser = user;
         newUser[e.target.name] = e.target.value;
@@ -15,13 +16,38 @@ const Login = () => {
     }
     function handleLogin(e) {
         e.preventDefault();
-        axios.post("http://127.0.0.1:8000/api/login", user).then((res) => {
-            console.log(res.data);
-        }).catch((e) => {
-            console.log(e.response.data);
-        });
+        axios.post("api/login", user).then((res) => {
+            // console.log(res.data);
+            if (res.data.success === true) {
+                window.sessionStorage.setItem('auth_token', res.data.access_token);
 
+                console.log("SUCCESS");
+                console.log(res.data.user);
+                on_login(res.data.user);
+                // console.log(logged_user);
+                navigate("/");
+
+            } else {
+                console.log("FAILURE");
+            }
+        })
+            .catch((e) => {
+                console.log(e.response.data);
+            });
     }
+
+    // function handleLogin(e) {
+    //     e.preventDefault();
+    //     axios.post("api/login", user).then((res) => {
+    //         console.log(res.data);
+    //         if (res.data.success === true) {
+    //             window.sessionStorage.setItem('auth_token', res.data.access_token);
+    //         }
+    //     }).catch((e) => {
+    //         console.log(e.response.data);
+    //     });
+
+    // }
     return (
         <section className="my-5 py-5">
             <div className="container text-center mt-3 pt-5">
@@ -44,9 +70,11 @@ const Login = () => {
                     <div className="form-group">
                         <input type="submit" className="btn" id="login-btn" name="login_btn" value="Login" />
                     </div>
-                    {/* <div className="form-group">
-                        <a id="register-url" href="../register-page/Register.jsx" className="btn">Don't have an account? Register</a>
-                    </div> */}
+                    <div className="form-group">
+                        <Link className="nav-link" to="/register">
+                            Don't have an account? Register
+                        </Link>
+                    </div>
                 </form>
             </div>
 
