@@ -17,31 +17,20 @@ class AuthController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|min:6|max:40',
-            'email' => 'required|string|email|max:40|unique:users',
-            'password' => 'required|string|min:8|max:40'
+            'email' => 'required|string|max:40|unique:users',
+            'password' => 'required|string|min:8|max:40',
         ]);
 
         if ($validator->fails()) {
             return response()->json($validator->errors());
         }
 
-        // $user = User::create([
-        //     'name' => $request->name,
-        //     'email' => $request->email,
-        //     'password' => Hash::make($request->password),
-
-        // ]);
-        User::insert([
-
+        User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'user_type' => 'regular',
-            'remember_token' => Str::random(10),
-            'created_at' => now(),
-            'updated_at' => now()
-
         ]);
+
         return response()->json([
             'message' => 'Successful registration.',
         ]);
@@ -53,6 +42,7 @@ class AuthController extends Controller
 
         if (!Auth::attempt($request->only('email', 'password'))) {
             return response()->json([
+                'message' => 'Incorrect login credentials',
                 'success' => false
             ]);
         }
@@ -64,6 +54,7 @@ class AuthController extends Controller
         $resourced_user = new UserResource($user);
 
         return response()->json([
+            'message' => 'Successful login, user ' . $user->name,
             'success' => true,
             'access_token' => $token,
             'token_type' => 'Bearer',

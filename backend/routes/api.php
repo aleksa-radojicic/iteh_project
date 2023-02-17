@@ -32,12 +32,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('order_items', [OrderOrderItemController::class, 'show']);
 
     //WORKS
-    Route::resource('products', ProductController::class)->only(['show']);
-
-    //NEEDS TO BE IMPLEMENTED PROPERLY
-    Route::get('shop', [ProductController::class, 'showProductsPerPage']);
-
-    //WORKS
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 
@@ -56,6 +50,10 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
     Route::put('products/{id}', [ProductController::class, 'update']);
 });
 
+//NEEDS TO BE IMPLEMENTED PROPERLY
+Route::get('shop/{page}', [ProductController::class, 'showProductsPerPage']);
+
+
 //EVERYTHING BELOW WORKS
 Route::resource('products', ProductController::class)->only(['show']);
 
@@ -66,3 +64,6 @@ Route::get('/login', function () {
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('products', [ProductController::class, 'index']);
+
+//WORKS
+Route::resource('shop/product', ProductController::class)->only(['show']);

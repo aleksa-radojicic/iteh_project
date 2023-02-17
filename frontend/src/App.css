@@ -674,3 +674,8 @@ th:last-child {
   color: #ffffff;
   width: 1.5rem;
 }
+.abv {
+  display: flex;
+  flex-direction: row;
+  margin: 10%;
+}

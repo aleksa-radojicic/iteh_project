@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
+
+    public $total_records_per_page = 1;
     /**
      * Display a listing of the resource.
      *
@@ -28,11 +30,10 @@ class ProductController extends Controller
 
 
     //MORE WORK NEEDS TO BE DONE HERE
-    public function showProductsPerPage($offset, $total_records_per_page)
+    public function showProductsPerPage($page)
     {
-
-
-        // $number_of_products = Product::count();
+        $total_records_per_page = 3;
+        $offset = ($page - 1) * $total_records_per_page;
 
         $products = DB::table('products')->skip($offset)->take($total_records_per_page)->get();
 
@@ -105,7 +106,6 @@ class ProductController extends Controller
             return new ProductResource($product);
         }
         return response()->json('Product not found', 404);
-        
     }
 
     /**

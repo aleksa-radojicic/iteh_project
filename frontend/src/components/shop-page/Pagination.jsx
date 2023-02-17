@@ -2,8 +2,12 @@ import React from "react";
 import { usePagination, DOTS } from "../../hooks/usePagination";
 import "../../pagination.css";
 
-const Pagination = ({ on_page_change, total_count, current_page, page_size }) => {
-
+const Pagination = ({
+  total_count,
+  current_page,
+  page_size,
+  on_page_number_change,
+}) => {
   const pagination_range = usePagination({
     current_page,
     total_count,
@@ -15,12 +19,16 @@ const Pagination = ({ on_page_change, total_count, current_page, page_size }) =>
     return null;
   }
 
+  const on_page = (page_number) => {
+    on_page_number_change(page_number);
+  };
+
   const on_next = () => {
-    on_page_change(current_page + 1);
+    on_page_number_change(current_page + 1);
   };
 
   const on_previous = () => {
-    on_page_change(current_page - 1);
+    on_page_number_change(current_page - 1);
   };
 
   let last_page = pagination_range[pagination_range.length - 1];
@@ -29,7 +37,6 @@ const Pagination = ({ on_page_change, total_count, current_page, page_size }) =>
     <nav aria-label="Page navigation example">
       <ul className="pagination mt-5">
         {pagination_range.map((page_number) => {
-
           //Show dots (...)
           if (page_number === DOTS) {
             return (
@@ -41,11 +48,8 @@ const Pagination = ({ on_page_change, total_count, current_page, page_size }) =>
 
           //Show page numbers
           return (
-            <li
-              className="page-item"
-              onClick={() => on_page_change(page_number)}
-            >
-              <a className={"page-link " + (page_number === current_page ? "text-black" : "")}>{page_number}</a>
+            <li className="page-item" onClick={() => on_page(page_number)}>
+              <a className={"page-link " + (page_number === current_page ? "text-dark" : "")}>{page_number}</a>
             </li>
           );
         })}
