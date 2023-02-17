@@ -10,7 +10,7 @@ import SingleProduct from "./components/single-product-page/SingleProduct";
 import Login from "./components/login-page/Login";
 
 //number of products shown on a single page
-const page_size = 1;
+const page_size = 3;
 
 function App() {
   const products = [
@@ -140,12 +140,14 @@ function App() {
 
   //using useMemo hook to improve performance (executing the
   //function only when variable current page changes)
-  const products_on_current_page = useMemo(() => {
-    const first_page_index = (current_page - 1) * page_size;
-    const last_page_index = first_page_index + page_size;
+  // const products_on_current_page = useMemo(() => {
+  //   const first_page_index = (current_page - 1) * page_size;
+  //   const last_page_index = first_page_index + page_size;
 
-    return products.slice(first_page_index, last_page_index);
-  }, [current_page]);
+  //   return products.slice(first_page_index, last_page_index);
+  // }, [current_page]);
+
+  const [logged_user, setLoggedUser] = useState();
 
   return (
     <BrowserRouter>
@@ -160,19 +162,27 @@ function App() {
           path="/shop"
           element={
             <Shop
-              products={products_on_current_page}
               current_page={current_page}
-              total_count={products.length}
+              // total_count={products.length}
+              total_count={9}
               page_size={page_size}
-              on_page_change={(page) => setCurrentPage(page)}
+              on_page_number_change={setCurrentPage}
             />
           }
         />
         <Route
           path="/single_product/:id"
-          element={<SingleProduct products={products} />}
+          element={<SingleProduct />}
         />
-        <Route path="/login" element={<Login />} />
+        <Route
+          path="/login"
+          element={
+            <Login
+              logged_user={logged_user}
+              on_login={(user) => setLoggedUser(user)}
+            />
+          }
+        />
       </Routes>
 
       <Footer />
