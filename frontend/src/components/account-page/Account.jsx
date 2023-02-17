@@ -65,6 +65,14 @@ const Account = ({ user }) => {
                                 <td>{item.cost}</td>
                                 <td>{item.user_city}</td>
                                 <td>{item.user_address}</td>
+                                <td>
+                                    <form>
+                                        {/* ovo mogu da uradim preko komponente ? u value order id */}
+                                        <input type="hidden" value="" name="order_id" />
+                                        <input class="btn order-details-btn" name="order_details_btn"
+                                            type="submit" value="details" />
+                                    </form>
+                                </td>
                             </tr>
                         );
                     })}

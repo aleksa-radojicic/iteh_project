@@ -1,8 +1,8 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
-const Product = ({product}) => {
+const Product = ({ product, onAdd }) => {
   return (
     <div className="product text-center col-lg-3 col-md-4 col-sm-12">
       <img className="img-fluid mb-3" src={require("../../images/" + product.image)} />
@@ -21,8 +21,9 @@ const Product = ({product}) => {
       <h4 className="p-price">{"$" + product.price}</h4>
 
       <Link to={`/single_product/${product.id}`} className="btn buy-btn">Buy Now</Link>
+      <button onClick={() => onAdd(product)}>Add To Cart</button>
     </div>
-  )
-}
+  );
+};
 
-export default Product
+export default Product;

@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 
-function NavBar({ token }) {
+function NavBar({ token, countCartItems }) {
   function handleLogout() {
     var config = {
       method: "post",
@@ -74,9 +74,17 @@ function NavBar({ token }) {
 
 
             <li className="nav-item">
-              <a href="localhost:3000">
+              <Link className="nav-link" to="/cart">
                 <i className="fas fa-shopping-cart"></i>
-              </a>
+              </Link>
+              {/* <a href="/cart">
+                Cart{' '}
+                {countCartItems ? (
+                  <button className="badge">{countCartItems}</button>
+                ) : (
+                  ''
+                )}
+              </a>{' '} */}
 
             </li>
 

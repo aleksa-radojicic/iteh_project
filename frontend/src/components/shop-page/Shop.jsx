@@ -10,8 +10,11 @@ const Shop = ({
   total_count,
   page_size,
   on_page_change,
+  onAdd
 }) => {
+
   return (
+
     <>
       <Helmet>
         <title>Aquarium Keep | Shop</title>
@@ -26,7 +29,7 @@ const Shop = ({
 
         <div className="row mx-auto container">
           {products.map((product) => (
-            <Product product={product} key={product.id} />
+            <Product product={product} key={product.id} onAdd={onAdd} />
           ))}
 
           <Pagination

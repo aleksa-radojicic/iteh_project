@@ -10,6 +10,8 @@ import SingleProduct from "./components/single-product-page/SingleProduct";
 import Login from "./components/login-page/Login";
 import Register from "./components/register-page/Register";
 import Account from "./components/account-page/Account";
+import Cart from "./components/layouts/Cart";
+
 //number of products shown on a single page
 const page_size = 1;
 
@@ -148,12 +150,39 @@ function App() {
 
     return products.slice(first_page_index, last_page_index);
   }, [current_page]);
+
   function addToken(auth_token) {
     setToken(auth_token);
   }
+  const [cartItems, setCartItems] = useState([]);
+  const onAdd = (product) => {
+    const exist = cartItems.find((x) => x.id === product.id);
+    if (exist) {
+      setCartItems(
+        cartItems.map((x) =>
+          x.id === product.id ? { ...exist, qty: exist.qty + 1 } : x
+        )
+      );
+    } else {
+      setCartItems([...cartItems, { ...product, qty: 1 }]);
+    }
+  };
+  const onRemove = (product) => {
+    const exist = cartItems.find((x) => x.id === product.id);
+    if (exist.qty === 1) {
+      setCartItems(cartItems.filter((x) => x.id !== product.id));
+    } else {
+      setCartItems(
+        cartItems.map((x) =>
+          x.id === product.id ? { ...exist, qty: exist.qty - 1 } : x
+        )
+      );
+    }
+  };
+
   return (
     <BrowserRouter>
-      <NavBar token={token} />
+      <NavBar token={token} cartItems={cartItems} />
 
       <Routes>
         <Route path="/" element={<Index />} />
@@ -169,6 +198,7 @@ function App() {
               total_count={products.length}
               page_size={page_size}
               on_page_change={(page) => setCurrentPage(page)}
+              onAdd={onAdd}
 
             />
           }
@@ -182,7 +212,9 @@ function App() {
         <Route path="/register" element={<Register />} />
 
         <Route path="/account" element={<Account user={logged_user} />} />
-
+        <Route path="/cart" element={<Cart cartItems={cartItems}
+          onAdd={onAdd}
+          onRemove={onRemove} />} />
       </Routes>
 
       <Footer />
