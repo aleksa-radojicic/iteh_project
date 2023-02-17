@@ -11,6 +11,7 @@ import Login from "./components/login-page/Login";
 import Register from "./components/register-page/Register";
 import Account from "./components/account-page/Account";
 import Cart from "./components/layouts/Cart";
+import OrderItems from "./components/account-page/OrderItems";
 
 //number of products shown on a single page
 const page_size = 3;
@@ -36,6 +37,9 @@ function App() {
     setToken(auth_token);
   }
   const [cartItems, setCartItems] = useState([]);
+
+  const [orderItems, setOrderItems] = useState([]);
+
   const onAdd = (product) => {
     const exist = cartItems.find((x) => x.id === product.id);
     if (exist) {
@@ -87,6 +91,11 @@ function App() {
         <Route
           path="/single_product/:id"
           element={<SingleProduct />}
+        />
+
+        <Route 
+          path="/orderItems/:id" 
+          element={<OrderItems/>} 
         />
 
         <Route path="/login" element={<Login logged_user={logged_user}

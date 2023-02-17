@@ -16,17 +16,20 @@ class OrderOrderItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
+    public function show($id)
     {
 
-        $order_id = $request->order_id;
+        $order_id = $id;
 
         //only allow access for orders of authenticated user
-        $order_items = OrderItem::with(['product', 'order'])->whereHas("order", function ($query) {
-            $query->where("user_id", Auth::id());
-        })->where('order_id', $order_id)->get();
+        // $order_items = OrderItem::with(['product', 'order'])->whereHas("order", function ($query) {
+        //     $query->where("user_id", Auth::id());
+        // })->where('order_id', $order_id)->get();
 
-        if ($order_items->empty()) 
+        $order_items = OrderItem::where("order_id", $order_id)->get();
+        
+
+        if ($order_items->isEmpty()) 
         {
             return "Order doesn't exist.";
         }
