@@ -679,3 +679,6 @@ th:last-child {
   flex-direction: row;
   margin: 10%;
 }
+.btn-pdf{
+  margin-left: 45%;
+}

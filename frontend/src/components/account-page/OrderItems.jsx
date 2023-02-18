@@ -1,4 +1,5 @@
-import React from "react";
+import React,{useRef} from "react";
+import {useReactToPrint} from 'react-to-print'
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -8,6 +9,14 @@ import Spinner from "../contact-page/Spinner";
 const OrderItems = () => {
   let { id } = useParams();
   const [orderItems, setOrderItems] = useState(null);
+
+  //print pdf
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+      content: () => componentRef.current,
+      documentTitle: "order-items",
+      onAfterPrint: ()=>alert('Print success')
+  });
 
   useEffect(() => {
     axios
@@ -23,8 +32,9 @@ const OrderItems = () => {
   }, []);
 
   return (
-    <>
-      <section className="orders container my-5 py-5">
+    <><div ref={componentRef}>
+      <section className="orders container my-5 py-5" >
+        
         <div className="container mt-5">
           <h2 className="font-weight-bold text-center">Order details</h2>
           <hr className="mx-auto" />
@@ -77,7 +87,10 @@ const OrderItems = () => {
           )}
           </tbody>
         </table>
+        
+        
       </section>
+      </div><button className="btn-pdf" onClick={handlePrint}>Print order</button>
     </>
   );
 };
