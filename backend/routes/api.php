@@ -31,8 +31,10 @@ Route::middleware('auth:sanctum')->group(function () {
     //HOWEVER, VALIDATION FOR ORDERITEM HAS TO BE IMPLEMENTED
     Route::post('orders', [OrderController::class, 'store']);
 
+    
+
     //WORKS
-    Route::get('order_items', [OrderOrderItemController::class, 'show']);
+    // Route::get('order_items/{id}', [OrderOrderItemController::class, 'show']);
 
     //WORKS
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -56,6 +58,7 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
 //NEEDS TO BE IMPLEMENTED PROPERLY
 Route::get('shop/{page}', [ProductController::class, 'showProductsPerPage']);
 
+Route::get('order_items/{id}', [OrderOrderItemController::class, 'show']);
 
 //EVERYTHING BELOW WORKS
 Route::resource('products', ProductController::class)->only(['show']);

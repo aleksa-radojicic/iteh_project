@@ -107,7 +107,7 @@ const AddProduct = () => {
             console.log(res.data);
             // if (isMounted) {
             if (res != null) {
-                setCategorylist(res.data.product_categories); // vraca objekat kategorija name:kurac id:broj
+                setCategorylist(res.data.product_categories);
             }
             // }
         });
