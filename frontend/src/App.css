@@ -478,7 +478,7 @@ th:last-child {
   color: #fff;
 }
 
-#login-form #register-url {
+.url-link {
   color: #fb774b;
 }
 
