@@ -679,3 +679,6 @@ th:last-child {
   flex-direction: row;
   margin: 10%;
 }
+#table {
+  margin-top: 10%;
+}

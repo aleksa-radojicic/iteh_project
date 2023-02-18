@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./components/index-page/Index";
@@ -11,6 +11,9 @@ import Login from "./components/login-page/Login";
 import Register from "./components/register-page/Register";
 import Account from "./components/account-page/Account";
 import Cart from "./components/layouts/Cart";
+import Masterpage from "./components/admin/Masterpage";
+import AddProduct from "./components/admin/product/AddProduct";
+import AllProducts from "./components/admin/product/AllProducts";
 
 //number of products shown on a single page
 const page_size = 3;
@@ -68,6 +71,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Index />} />
 
+        <Route path="admin/dashboard" element={<Masterpage />}></Route>
+        <Route path="admin/addProduct" element={<AddProduct />}></Route>
+        <Route path="admin/allProducts" element={<AllProducts />}></Route>
         <Route path="/contact" element={<Contact />} />
 
         <Route

@@ -5,6 +5,9 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderOrderItemController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProductCategoryController;
+
+use App\Models\ProductCategory;
 use Illuminate\Support\Facades\Route;
 
 
@@ -67,3 +70,5 @@ Route::get('products', [ProductController::class, 'index']);
 
 //WORKS
 Route::resource('shop/product', ProductController::class)->only(['show']);
+Route::post('admin/products', [ProductController::class, 'store']);
+Route::get('/product_categories', [ProductCategoryController::class, 'index']);
