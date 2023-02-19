@@ -35,7 +35,7 @@ class ProductController extends Controller
         $total_records_per_page = 3;
         $offset = ($page - 1) * $total_records_per_page;
 
-        $products = DB::table('products')->skip($offset)->take($total_records_per_page)->get();
+        $products = Product::with('product_category')->skip($offset)->take($total_records_per_page)->get();
 
         if ($products) {
             return new ProductCollection($products);
@@ -71,7 +71,10 @@ class ProductController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors());
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()
+            ]);
         }
 
         Product::create([
@@ -86,8 +89,11 @@ class ProductController extends Controller
         ]);
 
         return response()->json([
+            'success' => true,
             'message' => 'Successfully created a product',
         ]);
+
+        return $request;
     }
 
     /**

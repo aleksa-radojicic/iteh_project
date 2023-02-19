@@ -5,10 +5,16 @@ const useScript = path => {
     const script = document.createElement('script');
 
     script.src = path;
-
+    script.async = true;
     document.body.appendChild(script);
 
-  }, [path]);
+    return () => {
+      document.body.removeChild(script)
+    }
+  });  
 };
+
+
+
 
 export default useScript;

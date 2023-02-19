@@ -3,15 +3,18 @@ import { useNavigate } from "react-router-dom";
 
 
 
-const Account = ({ user }) => {
+const Account = ({ logged_user }) => {
 
-    const navigate = useNavigate()
-    function handleItem(id){
-        
-        navigate(`/orderItems/${id}`)
+    const navigate = useNavigate();
+    function handleItem(id) {
+
+        navigate(`/orderItems/${id}`);
         console.log(id);
-        
+
     }
+
+
+
 
     return (
         <div>
@@ -21,9 +24,9 @@ const Account = ({ user }) => {
                         <h3 className="font-weight-bold">Account info</h3>
                         <hr className="mx-auto" />
                         <div className="account-info">
-                            <p>ID: <span>{user.id}</span></p>
-                            <p>Name: <span>{user.name}</span></p>
-                            <p>Email: <span>{user.email}</span></p>
+                            <p>ID: <span>{logged_user.id}</span></p>
+                            <p>Name: <span>{logged_user.name}</span></p>
+                            <p>Email: <span>{logged_user.email}</span></p>
 
 
                         </div>
@@ -62,35 +65,35 @@ const Account = ({ user }) => {
                     <hr className="mx-auto" />
                 </div>
 
-                <table className="mt-5 pt-5">
+                <table className="mt-5 pt-5">;
                     <tbody>
-                    <tr>
-                        <th>Order id</th>
-                        <th>Order cost</th>
-                        <th>User city</th>
-                        <th>User address</th>
-                        <th>Order details</th>
-                    </tr>
-                    {user.orders.map(item => {
-                        return (
-                            <tr key={item.id}>
-                                <td>{item.id}</td>
-                                <td>{item.cost}</td>
-                                <td>{item.user_city}</td>
-                                <td>{item.user_address}</td>
-                                <td>
-                                    <form>
-                                        {/* ovo mogu da uradim preko komponente ? u value order id */}
-                                        <button className="btn order-details-btn" type="button" onClick={()=>handleItem(item.id)}>
+                        <tr>
+                            <th>Order id</th>
+                            <th>Order cost</th>
+                            <th>User city</th>
+                            <th>User address</th>
+                            <th>Order details</th>
+                        </tr>
+                        {logged_user.orders.map(item => {
+                            return (
+                                <tr key={item.id}>
+                                    <td>{item.id}</td>
+                                    <td>{item.cost}</td>
+                                    <td>{item.user_city}</td>
+                                    <td>{item.user_address}</td>
+                                    <td>
+                                        <form>
+                                            {/* ovo mogu da uradim preko komponente ? u value order id */}
+                                            <button className="btn order-details-btn" type="button" onClick={() => handleItem(item.id)}>
                                                 Details
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        );
-                    })}
-                    </tbody>
-                    
+                                            </button>
+                                        </form >
+                                    </td >
+                                </tr >
+                            );
+                        })}
+                    </tbody >
+
 
                 </table >
 

@@ -9,9 +9,7 @@ const Shop = ({
   current_page,
   total_count,
   page_size,
-
-  onAdd,
-
+  onAddToCart,
   on_page_number_change,
 }) => {
   const [products_on_current_page, setProductsOnCurrentPage] = useState([]);
@@ -75,7 +73,7 @@ const Shop = ({
         
         <div className="row mx-auto container">
           {products_on_current_page.map((product) => (
-            <Product product={product} key={product.id} onAdd={onAdd} />
+            <Product product={product} key={product.id} onAddToCart={onAddToCart} />
           ))
           }
 
