@@ -82,10 +82,10 @@ function EditProduct({ id }) {
         e.preventDefault();
         const obj = {
 
-            'image': picture.image,
-            'image2': picture2.image2,
-            'image3': picture3.image3,
-            'image4': picture4.image4,
+            'image': picture.image.name,
+            'image2': picture2.image2.name,
+            'image3': picture3.image3.name,
+            'image4': picture4.image4.name,
             'product_category_id': productInput.product_category_id,
             'name': productInput.name,
             'description': productInput.description,

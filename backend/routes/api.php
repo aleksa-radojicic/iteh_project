@@ -79,7 +79,10 @@ Route::get('/product_categories', [ProductCategoryController::class, 'index']);
 //HOWEVER, VALIDATION FOR ORDERITEM HAS TO BE IMPLEMENTED
 Route::post('orders', [OrderController::class, 'store']);
 
-//NEEDS TO BE IMPLEMENTED PROPERLY
-Route::get('shop/{page}', [ProductController::class, 'showProductsPerPage']);
+
+
 //WORKS (x-www-form)
 Route::put('products/{id}', [ProductController::class, 'update']);
+Route::get('shop/', [ProductController::class, 'showProductsPerPage']);
+
+Route::get('numofprod/', [ProductController::class, 'showNumberOfProducts']);

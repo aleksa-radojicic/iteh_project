@@ -51,10 +51,10 @@ const AddProduct = () => {
         e.preventDefault();
 
         const formData = new FormData();
-        formData.append('image', picture.image);
-        formData.append('image2', picture2.image2);
-        formData.append('image3', picture3.image3);
-        formData.append('image4', picture4.image4);
+        formData.append('image', picture.image.name);
+        formData.append('image2', picture2.image2.name);
+        formData.append('image3', picture3.image3.name);
+        formData.append('image4', picture4.image4.name);
         formData.append('product_category_id', parseInt(productInput.product_category_id));
         formData.append('name', productInput.name);
         formData.append('description', productInput.description);

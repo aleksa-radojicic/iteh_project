@@ -30,13 +30,22 @@ class ProductController extends Controller
 
 
     //MORE WORK NEEDS TO BE DONE HERE
-    public function showProductsPerPage($page)
+    public function showProductsPerPage(Request $request)
     {
-        $total_records_per_page = 3;
+        $page = $request->page;
+        $category_filter = $request->filter;
+
+        $total_records_per_page = 12;
         $offset = ($page - 1) * $total_records_per_page;
 
-        $products = Product::with('product_category')->skip($offset)->take($total_records_per_page)->get();
+        if($category_filter==NULL){
+            $products = Product::with('product_category')->skip($offset)->take($total_records_per_page)->get();
+        }else{
+            $products = Product::with('product_category')->where('product_category_id', $category_filter)->skip($offset)->take($total_records_per_page)->get();
+        }
+        
 
+        
         if ($products) {
             return new ProductCollection($products);
         }
@@ -163,6 +172,20 @@ class ProductController extends Controller
             'success' => true,
             'message' => 'Successfully updated the product',
         ]);
+    }
+
+    public function showNumberOfProducts(Request $request) {
+        
+        $category_filter = $request->filter;
+
+        if($category_filter==NULL){
+            $number_of_products = Product::count();
+        }else{
+            $number_of_products = Product::where('product_category_id', $category_filter)->count();
+            
+        }
+        
+        return ['number_of_products'=> $number_of_products];
     }
 
     /**
