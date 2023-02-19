@@ -132,19 +132,22 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string',
-            'description' => 'required|string|max:100',
-            'price' => 'required',
-            'image' => 'required'
-        ]);
+        // $validator = Validator::make($request->all(), [
+        //     'name' => 'required|string',
+        //     'description' => 'required|string|max:100',
+        //     'price' => 'required',
+        //     'image' => 'required'
+        // ]);
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors());
-        }
-
+        // if ($validator->fails()) {
+        //     return response()->json([
+        //         'success' => false,
+        //         'errors' => $validator->errors()
+        //     ]);
+        // }
+        $product = Product::find($id);
         $product->name = $request->name;
         $product->description = $request->description;
         $product->image = $request->image;
@@ -157,6 +160,7 @@ class ProductController extends Controller
         $product->save();
 
         return response()->json([
+            'success' => true,
             'message' => 'Successfully updated the product',
         ]);
     }

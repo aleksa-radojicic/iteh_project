@@ -52,7 +52,7 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
     //WORKS
     Route::post('products', [ProductController::class, 'store']);
     //WORKS (x-www-form)
-    Route::put('products/{id}', [ProductController::class, 'update']);
+    // Route::put('products/{id}', [ProductController::class, 'update']);
 });
 
 
@@ -81,3 +81,5 @@ Route::post('orders', [OrderController::class, 'store']);
 
 //NEEDS TO BE IMPLEMENTED PROPERLY
 Route::get('shop/{page}', [ProductController::class, 'showProductsPerPage']);
+//WORKS (x-www-form)
+Route::put('products/{id}', [ProductController::class, 'update']);

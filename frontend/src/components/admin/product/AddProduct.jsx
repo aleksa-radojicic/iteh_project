@@ -1,8 +1,9 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';
 const AddProduct = () => {
+    let navigate = useNavigate();
     const [categorylist, setCategorylist] = useState([]);
     const [productInput, setProduct] = useState({
         product_category_id: 1,
@@ -17,6 +18,8 @@ const AddProduct = () => {
     const [picture3, setPicture3] = useState([]);
     const [picture4, setPicture4] = useState([]);
     const [errorlist, setError] = useState([]);
+
+
     const handleImage = (e) => {
         setPicture({ image: e.target.files[0] });
 
@@ -42,7 +45,7 @@ const AddProduct = () => {
     const handleInput = (e) => {
         e.persist();
         setProduct({ ...productInput, [e.target.name]: e.target.value });
-        // console.log(e);
+
     };
     const submitProduct = (e) => {
         e.preventDefault();
@@ -56,8 +59,6 @@ const AddProduct = () => {
         formData.append('name', productInput.name);
         formData.append('description', productInput.description);
         formData.append('price', productInput.price);
-        console.log(productInput);
-
 
         axios.post(`/api/admin/products`, formData).then(res => {
             console.log(res);
@@ -78,44 +79,30 @@ const AddProduct = () => {
 
 
                 });
+                navigate("/admin/allProducts");
                 setError([]);
             }
             else {
                 swal("All Fields are mandetory", "", "error");
                 setError(res.data.errors);
+
             }
         });
 
     };
 
-    // useEffect(() => {
-    //     axios
-    //         .get("api/shop/" + current_page)
-    //         .then((res) => {
-    //             setProductsOnCurrentPage(res.data.products);
-    //         })
-    //         .catch((e) => {
-    //             console.log(e.response.data);
-    //         }, []);
-
-    // }, [current_page]);
 
     useEffect(() => {
-        let isMounted = true;
+
 
         axios.get(`/api/product_categories`).then(res => {
             console.log(res.data);
-            // if (isMounted) {
+
             if (res != null) {
                 setCategorylist(res.data.product_categories);
             }
-            // }
+
         });
-
-        return () => {
-            isMounted = false;
-        };
-
 
     }, []);
 
@@ -130,17 +117,6 @@ const AddProduct = () => {
                 <div className="card-body">
                     <form onSubmit={submitProduct} encType="multipart/form-data">
 
-                        {/* <ul className="nav nav-tabs" id="myTab" role="tablist">
-                            <li className="nav-item" role="presentation">
-                                <button className="nav-link active " id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Category</button>
-                            </li> */}
-                        {/* <li className="nav-item" role="presentation">
-                                <button className="nav-link" id="seotags-tab" data-bs-toggle="tab" data-bs-target="#seotags" type="button" role="tab" aria-controls="seotags" aria-selected="false">SEO Tags</button>
-                            </li> */}
-                        {/* <li className="nav-item" role="presentation">
-                                <button className="nav-link" id="otherdetails-tab" data-bs-toggle="tab" data-bs-target="#otherdetails" type="button" role="tab" aria-controls="otherdetails" aria-selected="false">Other Details</button>
-                            </li> */}
-                        {/* </ul> */}
                         <div className="tab-content" id="myTabContent">
                             <div className="tab-pane card-body border fade show active" id="homeP" role="tabpanel" aria-labelledby="home-tab">
 
@@ -151,7 +127,7 @@ const AddProduct = () => {
                                         {
                                             categorylist.map((item) => {
                                                 return (
-                                                    <option defaultValue={1} value={item.id} key={item.id}>{item.name + item.id} </option>
+                                                    <option defaultValue={1} value={item.id} key={item.id}>{item.name} </option>
                                                 );
                                             })
                                         }
@@ -200,68 +176,8 @@ const AddProduct = () => {
 
                                 </div>
                             </div>
-                            {/* <div className="tab-pane card-body border fade" id="seotags" role="tabpanel" aria-labelledby="seotags-tab">
 
-                                <div className="form-group mb-3">
-                                    <label>Meta Title</label>
-                                    <input type="text" name="meta_title" onChange={handleInput} value={productInput.meta_title} className="form-control" />
-                                    <small className="text-danger">{errorlist.meta_title}</small>
-                                </div>
-                                <div className="form-group mb-3">
-                                    <label>Meta Keyword</label>
-                                    <textarea name="meta_keyword" onChange={handleInput} value={productInput.meta_keyword} className="form-control"></textarea>
-                                </div>
-                                <div className="form-group mb-3">
-                                    <label>Meta Description</label>
-                                    <textarea name="meta_descrip" onChange={handleInput} value={productInput.meta_descrip} className="form-control"></textarea>
-                                </div>
 
-                            </div> */}
-                            {/* <div className="tab-pane card-body border fade" id="otherdetails" role="tabpanel" aria-labelledby="otherdetails-tab">
-
-                                <div className="row">
-
-                                    <div className="col-md-4 form-group mb-3">
-                                        <label>Selling Price</label>
-                                        <input type="text" name="selling_price" onChange={handleInput} value={productInput.selling_price} className="form-control" />
-                                        <small className="text-danger">{errorlist.selling_price}</small>
-                                    </div>
-                                    <div className="col-md-4 form-group mb-3">
-                                        <label>Original Price</label>
-                                        <input type="text" name="original_price" onChange={handleInput} value={productInput.original_price} className="form-control" />
-                                        <small className="text-danger">{errorlist.original_price}</small>
-                                    </div>
-                                    <div className="col-md-4 form-group mb-3">
-                                        <label>Quantity</label>
-                                        <input type="text" name="qty" onChange={handleInput} value={productInput.qty} className="form-control" />
-                                        <small className="text-danger">{errorlist.qty}</small>
-                                    </div>
-                                    <div className="col-md-4 form-group mb-3">
-                                        <label>Brand</label>
-                                        <input type="text" name="brand" onChange={handleInput} value={productInput.brand} className="form-control" />
-                                        <small className="text-danger">{errorlist.brand}</small>
-                                    </div>
-                                    <div className="col-md-8 form-group mb-3">
-                                        <label>Image</label>
-                                        <input type="file" name="image" onChange={handleImage} className="form-control" />
-                                        <small className="text-danger">{errorlist.image}</small>
-                                    </div>
-                                    <div className="col-md-4 form-group mb-3">
-                                        <label>Featured (checked=shown)</label>
-                                        <input type="checkbox" name="featured" onChange={handleInput} value={productInput.featured} className="w-50 h-50" />
-                                    </div>
-                                    <div className="col-md-4 form-group mb-3">
-                                        <label>Popular (checked=shown)</label>
-                                        <input type="checkbox" name="popular" onChange={handleInput} value={productInput.popular} className="w-50 h-50" />
-                                    </div>
-                                    <div className="col-md-4 form-group mb-3">
-                                        <label>Status (checked=Hidden)</label>
-                                        <input type="checkbox" name="status" onChange={handleInput} value={productInput.status} className="w-50 h-50" />
-                                    </div>
-
-                                </div>
-
-                            </div> */}
                         </div>
                         <button type="submit" className="btn btn-primary px-4 mt-2">Submit</button>
 

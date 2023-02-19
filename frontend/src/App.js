@@ -16,13 +16,21 @@ import AddProduct from "./components/admin/product/AddProduct";
 import AllProducts from "./components/admin/product/AllProducts";
 import OrderItems from "./components/account-page/OrderItems";
 import Checkout from "./components/checkout-page/Checkout";
+import EditProduct from "./components/admin/product/EditProduct";
 
-//number of products shown on a single page
+// Passing data from Child - to - parent
+// For passing the data from the child component 
+
+// to the parent component, we have to create a callback;
+// function in the parent component and then pass the callback;
+// function to the child component as a prop.This callback function
+//   will retrieve the data from the child component.;
+// The child component calls the parent callback function using props and passes the data to the parent component.;
 const page_size = 3;
 
 function App() {
   const [token, setToken] = useState(null);
-
+  const [productId, setProductId] = useState();
   const [current_page, setCurrentPage] = useState(1);
 
   //using useMemo hook to improve performance (executing the
@@ -38,6 +46,9 @@ function App() {
 
   function addToken(auth_token) {
     setToken(auth_token);
+  }
+  function addProductId(id) {
+    setProductId(id);
   }
   const [cartItems, setCartItems] = useState([]);
 
@@ -95,7 +106,8 @@ function App() {
 
         <Route path="admin/dashboard" element={<Masterpage />}></Route>
         <Route path="admin/addProduct" element={<AddProduct />}></Route>
-        <Route path="admin/allProducts" element={<AllProducts />}></Route>
+        <Route path="admin/allProducts" element={<AllProducts addProductId={addProductId} />}></Route>
+        <Route path="admin/allProducts/editProduct/:id" element={<EditProduct id={productId} />}></Route>
         <Route path="/contact" element={<Contact />} />
 
         <Route
