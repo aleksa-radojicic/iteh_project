@@ -5,7 +5,7 @@ import swal from 'sweetalert';
 const AddProduct = () => {
     const [categorylist, setCategorylist] = useState([]);
     const [productInput, setProduct] = useState({
-        product_category_id: '',
+        product_category_id: 1,
         name: '',
         description: '',
         price: '',
@@ -56,11 +56,11 @@ const AddProduct = () => {
         formData.append('name', productInput.name);
         formData.append('description', productInput.description);
         formData.append('price', productInput.price);
-        // console.log(productInput);
+        console.log(productInput);
 
 
         axios.post(`/api/admin/products`, formData).then(res => {
-            // console.log(res);
+            console.log(res);
             if (res.data.success === true) {
 
                 swal("Success", res.data.message, "success");
@@ -74,7 +74,7 @@ const AddProduct = () => {
                     image2: '',
                     image3: '',
                     image4: '',
-                    product_category_id: '',
+                    product_category_id: 1,
 
 
                 });
@@ -151,7 +151,7 @@ const AddProduct = () => {
                                         {
                                             categorylist.map((item) => {
                                                 return (
-                                                    <option value={item.id} key={item.id}>{item.name}</option>
+                                                    <option defaultValue={1} value={item.id} key={item.id}>{item.name + item.id} </option>
                                                 );
                                             })
                                         }
