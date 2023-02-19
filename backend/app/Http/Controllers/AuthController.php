@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -17,12 +16,15 @@ class AuthController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|min:6|max:40',
-            'email' => 'required|string|max:40|unique:users',
+            'email' => 'required|string|min:6|max:40|unique:users',
             'password' => 'required|string|min:8|max:40',
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors());
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()]
+            );
         }
 
         User::create([
@@ -32,6 +34,7 @@ class AuthController extends Controller
         ]);
 
         return response()->json([
+            'success' => true,
             'message' => 'Successful registration.',
         ]);
     }
@@ -65,7 +68,7 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
 
-        $request->user()->currentAccessToken()->delete();
+      $request->user()->currentAccessToken()->delete();
 
         return response()->json([
             'message' => 'Successful logout',

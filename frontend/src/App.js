@@ -15,13 +15,13 @@ import Masterpage from "./components/admin/Masterpage";
 import AddProduct from "./components/admin/product/AddProduct";
 import AllProducts from "./components/admin/product/AllProducts";
 import OrderItems from "./components/account-page/OrderItems";
+import Checkout from "./components/checkout-page/Checkout";
 
 //number of products shown on a single page
 const page_size = 3;
 
 function App() {
   const [token, setToken] = useState(null);
-
 
   const [current_page, setCurrentPage] = useState(1);
 
@@ -41,28 +41,41 @@ function App() {
   }
   const [cartItems, setCartItems] = useState([]);
 
-  const [orderItems, setOrderItems] = useState([]);
-
-  const onAdd = (product) => {
-    const exist = cartItems.find((x) => x.id === product.id);
+  const onAddToCart = (product) => {
+    const exist = cartItems.find((x) => x.product.id === product.id);
     if (exist) {
       setCartItems(
         cartItems.map((x) =>
-          x.id === product.id ? { ...exist, qty: exist.qty + 1 } : x
+          x.product.id === product.id
+            ? {
+              ...exist,
+              price: product.price * (exist.quantity + 1),
+              quantity: exist.quantity + 1,
+            }
+            : x
         )
       );
     } else {
-      setCartItems([...cartItems, { ...product, qty: 1 }]);
+      setCartItems([
+        ...cartItems,
+        { product: product, price: product.price, quantity: 1 },
+      ]);
     }
   };
-  const onRemove = (product) => {
-    const exist = cartItems.find((x) => x.id === product.id);
-    if (exist.qty === 1) {
-      setCartItems(cartItems.filter((x) => x.id !== product.id));
+  const onRemoveFromCart = (product) => {
+    const exist = cartItems.find((x) => x.product.id === product.id);
+    if (exist.quantity === 1) {
+      setCartItems(cartItems.filter((x) => x.product.id !== product.id));
     } else {
       setCartItems(
         cartItems.map((x) =>
-          x.id === product.id ? { ...exist, qty: exist.qty - 1 } : x
+          x.product.id === product.id
+            ? {
+              ...exist,
+              price: product.price * (exist.quantity - 1),
+              quantity: exist.quantity - 1,
+            }
+            : x
         )
       );
     }
@@ -70,7 +83,12 @@ function App() {
 
   return (
     <BrowserRouter>
-      <NavBar token={token} cartItems={cartItems} />
+      <NavBar
+        token={token}
+        setToken={setToken}
+        cartItems={cartItems}
+        setLoggedUser={setLoggedUser}
+      />
 
       <Routes>
         <Route path="/" element={<Index />} />
@@ -84,19 +102,18 @@ function App() {
           path="/shop"
           element={
             <Shop
-
               current_page={current_page}
               // total_count={products.length}
               total_count={9}
               page_size={page_size}
-              onAdd={onAdd}
+              onAddToCart={onAddToCart}
               on_page_number_change={setCurrentPage}
             />
           }
         />
         <Route
           path="/single_product/:id"
-          element={<SingleProduct />}
+          element={<SingleProduct onAddToCart={onAddToCart} />}
         />
 
         <Route
@@ -104,18 +121,47 @@ function App() {
           element={<OrderItems />}
         />
 
-        <Route path="/login" element={<Login logged_user={logged_user}
-          on_login={setLoggedUser} addToken={addToken} />} />
+        <Route
+          path="/login"
+          element={
+            <Login
+              logged_user={logged_user}
+              setLoggedUser={setLoggedUser}
+              addToken={addToken}
+            />
+          }
+        />
         <Route path="/register" element={<Register />} />
 
-        <Route path="/account" element={<Account user={logged_user} />} />
-        <Route path="/cart" element={<Cart cartItems={cartItems}
-          onAdd={onAdd}
-          onRemove={onRemove} />} />
-      </Routes >
+        <Route
+          path="/account"
+          element={<Account logged_user={logged_user} />}
+        />
+        <Route
+          path="/cart"
+          element={
+            <Cart
+              cartItems={cartItems}
+              onAddToCart={onAddToCart}
+              onRemoveFromCart={onRemoveFromCart}
+            />
+          }
+        />
+        <Route
+          path="/checkout"
+          element={
+            <Checkout
+              cartItems={cartItems}
+              setCartItems={setCartItems}
+              logged_user={logged_user}
+              setLoggedUser={setLoggedUser}
+            />
+          }
+        />
+      </Routes>
 
       <Footer />
-    </BrowserRouter >
+    </BrowserRouter>
   );
 }
 

@@ -27,14 +27,14 @@ Route::middleware('auth:sanctum')->group(function () {
     //WORKS
     Route::get('user', [UserController::class, 'index']);
 
-    //WORKS
-    //HOWEVER, VALIDATION FOR ORDERITEM HAS TO BE IMPLEMENTED
-    Route::post('orders', [OrderController::class, 'store']);
 
-    
+
+
+
 
     //WORKS
     // Route::get('order_items/{id}', [OrderOrderItemController::class, 'show']);
+    Route::get('/order_items/{id}', [OrderOrderItemController::class, 'show']);
 
     //WORKS
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -55,8 +55,7 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
     Route::put('products/{id}', [ProductController::class, 'update']);
 });
 
-//NEEDS TO BE IMPLEMENTED PROPERLY
-Route::get('shop/{page}', [ProductController::class, 'showProductsPerPage']);
+
 
 Route::get('order_items/{id}', [OrderOrderItemController::class, 'show']);
 
@@ -75,3 +74,10 @@ Route::get('products', [ProductController::class, 'index']);
 Route::resource('shop/product', ProductController::class)->only(['show']);
 Route::post('admin/products', [ProductController::class, 'store']);
 Route::get('/product_categories', [ProductCategoryController::class, 'index']);
+
+//WORKS
+//HOWEVER, VALIDATION FOR ORDERITEM HAS TO BE IMPLEMENTED
+Route::post('orders', [OrderController::class, 'store']);
+
+//NEEDS TO BE IMPLEMENTED PROPERLY
+Route::get('shop/{page}', [ProductController::class, 'showProductsPerPage']);
