@@ -64,8 +64,8 @@ class OrderController extends Controller
                     'order_id' => $order->id,
                     'product_id' => $order_item['product']['id'],
                     'price' => $order_item['price'],
-                    // 'quantity' => $order_item['quantity'],
-                    'quantity' => null
+                    'quantity' => $order_item['quantity'],
+                    
                 ]);
             }
             DB::commit();

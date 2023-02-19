@@ -80,4 +80,6 @@ Route::get('/product_categories', [ProductCategoryController::class, 'index']);
 Route::post('orders', [OrderController::class, 'store']);
 
 //NEEDS TO BE IMPLEMENTED PROPERLY
-Route::get('shop/{page}', [ProductController::class, 'showProductsPerPage']);
+Route::get('shop/', [ProductController::class, 'showProductsPerPage']);
+
+Route::get('numofprod/', [ProductController::class, 'showNumberOfProducts']);

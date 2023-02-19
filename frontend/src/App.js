@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./components/index-page/Index";
@@ -16,25 +16,22 @@ import AddProduct from "./components/admin/product/AddProduct";
 import AllProducts from "./components/admin/product/AllProducts";
 import OrderItems from "./components/account-page/OrderItems";
 import Checkout from "./components/checkout-page/Checkout";
+import axios from "axios";
 
 //number of products shown on a single page
-const page_size = 3;
+const page_size = 12;
 
 function App() {
   const [token, setToken] = useState(null);
 
   const [current_page, setCurrentPage] = useState(1);
 
-  //using useMemo hook to improve performance (executing the
-  //function only when variable current page changes)
-  // const products_on_current_page = useMemo(() => {
-  //   const first_page_index = (current_page - 1) * page_size;
-  //   const last_page_index = first_page_index + page_size;
-
-  //   return products.slice(first_page_index, last_page_index);
-  // }, [current_page]);
-
   const [logged_user, setLoggedUser] = useState();
+
+  const [total_product_count, setTotalProductCount] = useState(0);
+
+  //Id of selected category for shop page
+  const [selectedCategory, setSelectedCategory] = useState();
 
   function addToken(auth_token) {
     setToken(auth_token);
@@ -48,10 +45,10 @@ function App() {
         cartItems.map((x) =>
           x.product.id === product.id
             ? {
-              ...exist,
-              price: product.price * (exist.quantity + 1),
-              quantity: exist.quantity + 1,
-            }
+                ...exist,
+                price: product.price * (exist.quantity + 1),
+                quantity: exist.quantity + 1,
+              }
             : x
         )
       );
@@ -71,15 +68,35 @@ function App() {
         cartItems.map((x) =>
           x.product.id === product.id
             ? {
-              ...exist,
-              price: product.price * (exist.quantity - 1),
-              quantity: exist.quantity - 1,
-            }
+                ...exist,
+                price: product.price * (exist.quantity - 1),
+                quantity: exist.quantity - 1,
+              }
             : x
         )
       );
     }
   };
+
+  //get total number of products for shop page pagination
+
+  useEffect(() => {
+    axios
+      .get(`/api/numofprod`, {
+        params: {
+          filter: selectedCategory,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        if (res != null) {
+          setTotalProductCount(res.data.number_of_products);
+        }
+      })
+      .catch((e) => {
+        console.log(e.response.data);
+      }, []);
+  }, [selectedCategory]);
 
   return (
     <BrowserRouter>
@@ -103,11 +120,13 @@ function App() {
           element={
             <Shop
               current_page={current_page}
-              // total_count={products.length}
-              total_count={9}
+              setCurrentPage={setCurrentPage}
+              total_count={total_product_count}
               page_size={page_size}
               onAddToCart={onAddToCart}
               on_page_number_change={setCurrentPage}
+              selectedCategory={selectedCategory}
+              setSelectedCategory={setSelectedCategory}
             />
           }
         />
@@ -116,10 +135,7 @@ function App() {
           element={<SingleProduct onAddToCart={onAddToCart} />}
         />
 
-        <Route
-          path="/orderItems/:id"
-          element={<OrderItems />}
-        />
+        <Route path="/orderItems/:id" element={<OrderItems />} />
 
         <Route
           path="/login"
