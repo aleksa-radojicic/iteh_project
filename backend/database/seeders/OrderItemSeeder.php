@@ -54,7 +54,7 @@ class OrderItemSeeder extends Seeder
 
                 'order_id' => 3,
                 'product_id' => 3,
-                'price' => 39.99,
+                'price' => 49.99,
                 'quantity' => 5,
                 'created_at' => now(),
                 'updated_at' => now()

@@ -1,5 +1,5 @@
-import React from 'react'
-
+import React from 'react';
+import { Link } from 'react-router-dom';
 function Home() {
   return (
     <section id="home">
@@ -12,10 +12,10 @@ function Home() {
           We offer quality freshwater and marine aquaristic products for
           everyone's taste and wallet.
         </p>
-        <button>Shop Now</button>
+        <Link to=""><button>Shop Now</button></Link>
       </div>
-    </section>
-  )
+    </section >
+  );
 }
 
-export default Home
+export default Home;

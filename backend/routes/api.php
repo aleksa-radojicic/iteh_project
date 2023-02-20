@@ -45,7 +45,7 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function () {
 
     //WORKS
-    Route::get('orders', [OrderController::class, 'index']);
+    // Route::get('orders', [OrderController::class, 'index']);
 
     //WORKS
     Route::get('products', [ProductController::class, 'index']);
@@ -86,3 +86,5 @@ Route::put('products/{id}', [ProductController::class, 'update']);
 Route::get('shop/', [ProductController::class, 'showProductsPerPage']);
 
 Route::get('numofprod/', [ProductController::class, 'showNumberOfProducts']);
+Route::delete('products/{id}', [ProductController::class, 'destroy']);
+Route::get('orders', [OrderController::class, 'index']);

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
+
 import "./App.css";
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./components/index-page/Index";
 import NavBar from "./components/layouts/NavBar";
@@ -18,6 +20,7 @@ import OrderItems from "./components/account-page/OrderItems";
 import Checkout from "./components/checkout-page/Checkout";
 import EditProduct from "./components/admin/product/EditProduct";
 import axios from "axios";
+import AllOrders from "./components/admin/order/AllOrders";
 
 
 //number of products shown on a single page
@@ -114,7 +117,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Index />} />
-
+        <Route path="admin/allOrders" element={<AllOrders />}></Route>
         <Route path="admin/dashboard" element={<Masterpage />}></Route>
         <Route path="admin/addProduct" element={<AddProduct />}></Route>
         <Route path="admin/allProducts" element={<AllProducts addProductId={addProductId} />}></Route>
@@ -183,7 +186,7 @@ function App() {
       </Routes>
 
       <Footer />
-    </BrowserRouter>
+    </BrowserRouter >
   );
 }
 

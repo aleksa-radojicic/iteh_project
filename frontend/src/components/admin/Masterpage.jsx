@@ -11,6 +11,7 @@ import routes from "../../routes/routes";
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
+import Dashboard from './Dashboard';
 
 // import routes from '../../routes/routes';
 const Masterpage = () => {
@@ -25,7 +26,7 @@ const Masterpage = () => {
 
                 <div id="layoutSidenav_content">
                     <main>
-
+                        <Dashboard />
 
                         {/* <Switch>
                             {routes.map((route, idx) => {

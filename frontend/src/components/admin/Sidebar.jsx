@@ -1,6 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
 const Sidebar = () => {
+
+
     return (
         <nav className="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
             <div className="sb-sidenav-menu">
@@ -10,17 +13,21 @@ const Sidebar = () => {
                         <div className="sb-nav-link-icon"><i className="fas fa-tachometer-alt"></i></div>
                         Dashboard
                     </Link>
+                    <div className="sb-sidenav-menu-heading">Product</div>
                     <Link className="nav-link" to="/admin/addProduct">
-                        <div className="sb-nav-link-icon"><i className="fas fa-tachometer-alt"></i></div>
+                        <div className="sb-nav-link-icon"><i class="fa-sharp fa-solid fa-bags-shopping"></i></div>
                         Add Product
                     </Link>
-                    <div className="sb-sidenav-menu-heading">Interface</div>
-                    <Link className="nav-link collapsed" to="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                        <div className="sb-nav-link-icon"><i className="fas fa-columns"></i></div>
-                        Layouts
-                        <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down"></i></div>
+                    <Link className="nav-link" to="/admin/allProducts">
+                        <div className="sb-nav-link-icon"><i class="fa-sharp fa-solid fa-bags-shopping"></i></div>
+                        View Products
                     </Link>
-                    <div className="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                    <div className="sb-sidenav-menu-heading">Orders</div>
+                    <Link className="nav-link" to="/admin/allOrders">
+                        <div className="sb-nav-link-icon"><i class="fa-sharp fa-solid fa-bags"></i></div>
+                        View orders
+                    </Link>
+                    {/* <div className="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                         <nav className="sb-sidenav-menu-nested nav">
                             <Link className="nav-link" to="layout-static.html">Static Navigation</Link>
                             <Link className="nav-link" to="layout-sidenav-light.html">Light Sidenav</Link>
@@ -65,13 +72,14 @@ const Sidebar = () => {
                     <Link className="nav-link" to="tables.html">
                         <div className="sb-nav-link-icon"><i className="fas fa-table"></i></div>
                         Tables
-                    </Link>
+                    </Link> */}
                 </div>
             </div>
             <div className="sb-sidenav-footer">
                 <div className="small">Logged in as:</div>
                 Admin profile
             </div>
+
         </nav>
     );
 };
