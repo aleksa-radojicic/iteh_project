@@ -22,6 +22,7 @@ import Footer from "./components/layouts/Footer";
 import NavBar from "./components/layouts/NavBar";
 
 
+
 //number of products shown on a single page
 const page_size = 12;
 
