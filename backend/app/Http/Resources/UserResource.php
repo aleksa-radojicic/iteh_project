@@ -20,6 +20,7 @@ class UserResource extends JsonResource
             'id' => $this->resource->id,
             'name' => $this->resource->name,
             'email' => $this->resource->email,
+            'user_type' => $this->resource->user_type,
             'orders' => new OrderCollection($this->resource->orders),
         ];
     }

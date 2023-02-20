@@ -38,14 +38,14 @@ class ProductController extends Controller
         $total_records_per_page = 12;
         $offset = ($page - 1) * $total_records_per_page;
 
-        if($category_filter==NULL){
+        if ($category_filter == NULL) {
             $products = Product::with('product_category')->skip($offset)->take($total_records_per_page)->get();
-        }else{
+        } else {
             $products = Product::with('product_category')->where('product_category_id', $category_filter)->skip($offset)->take($total_records_per_page)->get();
         }
-        
 
-        
+
+
         if ($products) {
             return new ProductCollection($products);
         }
@@ -73,8 +73,8 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string',
-            'description' => 'required|string|max:100',
+            'name' => 'required|string|min:5',
+            'description' => 'required|string|min:10|max:100',
             'price' => 'required',
             'image' => 'required'
         ]);
@@ -141,19 +141,22 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string',
-            'description' => 'required|string|max:100',
-            'price' => 'required',
-            'image' => 'required'
-        ]);
+        // $validator = Validator::make($request->all(), [
+        //     'name' => 'required|string',
+        //     'description' => 'required|string|max:100',
+        //     'price' => 'required',
+        //     'image' => 'required'
+        // ]);
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors());
-        }
-
+        // if ($validator->fails()) {
+        //     return response()->json([
+        //         'success' => false,
+        //         'errors' => $validator->errors()
+        //     ]);
+        // }
+        $product = Product::find($id);
         $product->name = $request->name;
         $product->description = $request->description;
         $product->image = $request->image;
@@ -166,22 +169,23 @@ class ProductController extends Controller
         $product->save();
 
         return response()->json([
+            'success' => true,
             'message' => 'Successfully updated the product',
         ]);
     }
 
-    public function showNumberOfProducts(Request $request) {
-        
+    public function showNumberOfProducts(Request $request)
+    {
+
         $category_filter = $request->filter;
 
-        if($category_filter==NULL){
+        if ($category_filter == NULL) {
             $number_of_products = Product::count();
-        }else{
+        } else {
             $number_of_products = Product::where('product_category_id', $category_filter)->count();
-            
         }
-        
-        return ['number_of_products'=> $number_of_products];
+
+        return ['number_of_products' => $number_of_products];
     }
 
     /**
@@ -190,8 +194,12 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
-        //
+        Product::destroy($id);
+
+        return response()->json([
+            'success' => true,
+        ]);
     }
 }

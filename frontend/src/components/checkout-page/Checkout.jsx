@@ -31,18 +31,10 @@ const Checkout = ({ cartItems, setCartItems, logged_user, setLoggedUser }) => {
       order_items: cartItems,
     };
 
-    var config = {
-      method: "post",
-      url: "api/orders",
-      headers: {
-        Authorization: "Bearer " + window.sessionStorage.getItem("auth_token"),
-      },
-      data: order,
-    };
 
     console.log(order);
 
-    axios(config)
+    axios.post("api/orders", order)
       .then((res) => {
         if (res.data.success === true) {
           console.log("Successfully created order.");

@@ -80,7 +80,7 @@ const Shop = ({
             id="category"
             name="product_category_id"
             onChange={handleInput}
-            //value={productInput.product_category_id}
+          //value={productInput.product_category_id}
           >
             <option value="">Show all products</option>
             {categorylist.map((item) => {
@@ -91,7 +91,7 @@ const Shop = ({
               );
             })}
           </select>
-          <p>Selected category: {selectedCategory}</p>
+
         </div>
 
         <div className="row mx-auto container">
