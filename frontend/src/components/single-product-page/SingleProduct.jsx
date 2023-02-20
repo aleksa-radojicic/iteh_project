@@ -7,9 +7,9 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Spinner from "../layouts/Spinner";
 
-const SingleProduct = ({ onAddToCart }) => {
+const SingleProduct = ({ token, onAddToCart }) => {
   let navigate = useNavigate();
-  
+
   //get id from url
   const { id } = useParams();
 
@@ -30,8 +30,14 @@ const SingleProduct = ({ onAddToCart }) => {
   useScript("../imagescript.js");
 
   function addToCartTrigger() {
-    onAddToCart(product);
-    navigate('/cart');
+    console.log("okinut");
+
+    if (token != null) {
+      onAddToCart(product);
+      navigate("/cart")
+    } else {
+      navigate("/login/?please_log_in_first")
+    }
   }
 
   return (

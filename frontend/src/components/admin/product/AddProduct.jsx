@@ -16,7 +16,6 @@ const AddProduct = () => {
     const [picture2, setPicture2] = useState([]);
     const [picture3, setPicture3] = useState([]);
     const [picture4, setPicture4] = useState([]);
-    const [errorlist, setError] = useState([]);
     const handleImage = (e) => {
         setPicture({ image: e.target.files[0] });
 
@@ -48,15 +47,14 @@ const AddProduct = () => {
         e.preventDefault();
 
         const formData = new FormData();
-        formData.append('image', picture.image);
-        formData.append('image2', picture2.image2);
-        formData.append('image3', picture3.image3);
-        formData.append('image4', picture4.image4);
+        formData.append('image', picture.image.name);
+        formData.append('image2', picture2.image2.name);
+        formData.append('image3', picture3.image3.name);
+        formData.append('image4', picture4.image4.name);
         formData.append('product_category_id', parseInt(productInput.product_category_id));
         formData.append('name', productInput.name);
         formData.append('description', productInput.description);
         formData.append('price', productInput.price);
-        console.log(productInput);
 
 
         axios.post(`/api/admin/products`, formData).then(res => {
@@ -78,27 +76,24 @@ const AddProduct = () => {
 
 
                 });
-                setError([]);
             }
             else {
-                swal("All Fields are mandetory", "", "error");
-                setError(res.data.errors);
+                let error_messages = res.data.errors;
+                
+                if (error_messages) {
+                    console.log(error_messages);
+      
+                    const errors_to_display = Object.values(error_messages).join("\n");
+          
+                    swal(errors_to_display, "", "error");
+                }
+                
+                console.log(res);
             }
         });
 
     };
 
-    // useEffect(() => {
-    //     axios
-    //         .get("api/shop/" + current_page)
-    //         .then((res) => {
-    //             setProductsOnCurrentPage(res.data.products);
-    //         })
-    //         .catch((e) => {
-    //             console.log(e.response.data);
-    //         }, []);
-
-    // }, [current_page]);
 
     useEffect(() => {
         let isMounted = true;
@@ -156,13 +151,11 @@ const AddProduct = () => {
                                             })
                                         }
                                     </select>
-                                    <small className="text-danger">{errorlist.product_category_id}</small>
                                 </div>
 
                                 <div className="form-group mb-3 col-md-2">
                                     <label>Name</label>
-                                    <input type="text" name="name" onChange={handleInput} value={productInput.name} className="form-control" />
-                                    <small className="text-danger">{errorlist.name}</small>
+                                    <input type="text" name="name" onChange={handleInput} value={productInput.name} className="form-control" required />
                                 </div>
                                 <div className="form-group mb-3">
                                     <label>Description</label>
@@ -172,96 +165,29 @@ const AddProduct = () => {
 
                                     <div className="col-md-8 form-group mb-3">
                                         <label>Price</label>
-                                        <input type="text" name="price" onChange={handleInput} value={productInput.price} className="form-control" />
-                                        <small className="text-danger">{errorlist.selling_price}</small>
+                                        <input type="text" name="price" onChange={handleInput} value={productInput.price} className="form-control" required />
                                     </div>
 
 
                                     <div className="col-md-6 form-group mb-3">
                                         <label>Image </label>
-                                        <input type="file" name="image" onChange={handleImage} className="form-control" />
-                                        <small className="text-danger">{errorlist.image}</small>
+                                        <input type="file" name="image" onChange={handleImage} className="form-control" required/>
                                     </div>
                                     <div className="col-md-6 form-group mb-3">
                                         <label>Image 2</label>
-                                        <input type="file" name="image2" onChange={handleImage2} className="form-control" />
-                                        <small className="text-danger">{errorlist.image2}</small>
+                                        <input type="file" name="image2" onChange={handleImage2} className="form-control" required/>
                                     </div>
                                     <div className="col-md-6 form-group mb-3">
                                         <label>Image 3</label>
-                                        <input type="file" name="image3" onChange={handleImage3} className="form-control" />
-                                        <small className="text-danger">{errorlist.image3}</small>
+                                        <input type="file" name="image3" onChange={handleImage3} className="form-control" required/>
                                     </div>
                                     <div className="col-md-6 form-group mb-3">
                                         <label>Image 4</label>
-                                        <input type="file" name="image4" onChange={handleImage4} className="form-control" />
-                                        <small className="text-danger">{errorlist.image4}</small>
+                                        <input type="file" name="image4" onChange={handleImage4} className="form-control" required/>
                                     </div>
 
                                 </div>
                             </div>
-                            {/* <div className="tab-pane card-body border fade" id="seotags" role="tabpanel" aria-labelledby="seotags-tab">
-
-                                <div className="form-group mb-3">
-                                    <label>Meta Title</label>
-                                    <input type="text" name="meta_title" onChange={handleInput} value={productInput.meta_title} className="form-control" />
-                                    <small className="text-danger">{errorlist.meta_title}</small>
-                                </div>
-                                <div className="form-group mb-3">
-                                    <label>Meta Keyword</label>
-                                    <textarea name="meta_keyword" onChange={handleInput} value={productInput.meta_keyword} className="form-control"></textarea>
-                                </div>
-                                <div className="form-group mb-3">
-                                    <label>Meta Description</label>
-                                    <textarea name="meta_descrip" onChange={handleInput} value={productInput.meta_descrip} className="form-control"></textarea>
-                                </div>
-
-                            </div> */}
-                            {/* <div className="tab-pane card-body border fade" id="otherdetails" role="tabpanel" aria-labelledby="otherdetails-tab">
-
-                                <div className="row">
-
-                                    <div className="col-md-4 form-group mb-3">
-                                        <label>Selling Price</label>
-                                        <input type="text" name="selling_price" onChange={handleInput} value={productInput.selling_price} className="form-control" />
-                                        <small className="text-danger">{errorlist.selling_price}</small>
-                                    </div>
-                                    <div className="col-md-4 form-group mb-3">
-                                        <label>Original Price</label>
-                                        <input type="text" name="original_price" onChange={handleInput} value={productInput.original_price} className="form-control" />
-                                        <small className="text-danger">{errorlist.original_price}</small>
-                                    </div>
-                                    <div className="col-md-4 form-group mb-3">
-                                        <label>Quantity</label>
-                                        <input type="text" name="qty" onChange={handleInput} value={productInput.qty} className="form-control" />
-                                        <small className="text-danger">{errorlist.qty}</small>
-                                    </div>
-                                    <div className="col-md-4 form-group mb-3">
-                                        <label>Brand</label>
-                                        <input type="text" name="brand" onChange={handleInput} value={productInput.brand} className="form-control" />
-                                        <small className="text-danger">{errorlist.brand}</small>
-                                    </div>
-                                    <div className="col-md-8 form-group mb-3">
-                                        <label>Image</label>
-                                        <input type="file" name="image" onChange={handleImage} className="form-control" />
-                                        <small className="text-danger">{errorlist.image}</small>
-                                    </div>
-                                    <div className="col-md-4 form-group mb-3">
-                                        <label>Featured (checked=shown)</label>
-                                        <input type="checkbox" name="featured" onChange={handleInput} value={productInput.featured} className="w-50 h-50" />
-                                    </div>
-                                    <div className="col-md-4 form-group mb-3">
-                                        <label>Popular (checked=shown)</label>
-                                        <input type="checkbox" name="popular" onChange={handleInput} value={productInput.popular} className="w-50 h-50" />
-                                    </div>
-                                    <div className="col-md-4 form-group mb-3">
-                                        <label>Status (checked=Hidden)</label>
-                                        <input type="checkbox" name="status" onChange={handleInput} value={productInput.status} className="w-50 h-50" />
-                                    </div>
-
-                                </div>
-
-                            </div> */}
                         </div>
                         <button type="submit" className="btn btn-primary px-4 mt-2">Submit</button>
 

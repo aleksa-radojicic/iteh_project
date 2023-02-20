@@ -40,7 +40,12 @@ const Login = ({ setLoggedUser, addToken }) => {
           setLoggedUser(res.data.user);
 
           alert("Successfully logged in");
-          navigate("/account");
+
+          if (res.data.user.user_type === "admin") {
+            navigate("/admin/dashboard");
+          } else {
+            navigate("/account");
+          }
         } else {
           // console.log(res.data);
           //display that credentials are incorrect
