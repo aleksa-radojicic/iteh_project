@@ -5,7 +5,17 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import axios from 'axios';
 
+//Axios configuration
 axios.defaults.baseURL = "http://127.0.0.1:8000/";
+axios.defaults.withCredentials = true;
+axios.defaults.headers.post["Accept"] =
+  "application/json";
+axios.interceptors.request.use(function (config) {
+  const token = window.sessionStorage.getItem("auth_token");
+  config.headers.Authorization = token ? `Bearer ${token}` : "";
+  return config;
+});
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 // $(document).ready(function () {
 //     $(".dropdown-toggle").dropdown();

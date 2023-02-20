@@ -94,12 +94,12 @@ function EditProduct({ id }) {
 
         const options = {
             method: 'PUT',
-            headers: { 'content-type': 'application/json' },
+
             data: obj,
-            url: 'api/products/' + id,
+            url: 'api/admin/products/' + id,
         };
         axios(options).then(res => {
-            console.log("Put zahtev iliti update");
+
             console.log(res);
             if (res.data.success === true) {
                 swal("Success", res.data.message, "success");

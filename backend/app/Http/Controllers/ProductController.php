@@ -73,8 +73,8 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string',
-            'description' => 'required|string|max:100',
+            'name' => 'required|string|min:5',
+            'description' => 'required|string|min:10|max:100',
             'price' => 'required',
             'image' => 'required'
         ]);

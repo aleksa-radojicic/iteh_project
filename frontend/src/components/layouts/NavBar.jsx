@@ -7,16 +7,7 @@ function NavBar({ token, setToken, countCartItems, setLoggedUser }) {
   let navigate = useNavigate();
 
   function handleLogout() {
-    //config arguments for customizing axios request
-    var config = {
-      method: "post",
-      url: "api/logout",
-      headers: {
-        Authorization: "Bearer " + window.sessionStorage.getItem("auth_token"),
-      },
-    };
-
-    axios(config)
+    axios.post("api/logout")
       .then(function (response) {
         console.log(JSON.stringify(response.data));
         window.sessionStorage.setItem("auth_token", "");
@@ -27,7 +18,6 @@ function NavBar({ token, setToken, countCartItems, setLoggedUser }) {
 
         //delete token
         setToken();
-
         navigate("/?successfuly_logged_out");
       })
       .catch(function (error) {
@@ -70,12 +60,6 @@ function NavBar({ token, setToken, countCartItems, setLoggedUser }) {
               <Link to="/shop" className="nav-link">
                 Shop
               </Link>
-            </li>
-
-            <li className="nav-item">
-              <a className="nav-link" href="localhost:3000">
-                Blog
-              </a>
             </li>
 
             <li className="nav-item">

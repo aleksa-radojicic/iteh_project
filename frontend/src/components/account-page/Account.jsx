@@ -78,7 +78,7 @@ const Account = ({ logged_user }) => {
                             return (
                                 <tr key={item.id}>
                                     <td>{item.id}</td>
-                                    <td>{item.cost}</td>
+                                    <td>${item.cost}</td>
                                     <td>{item.user_city}</td>
                                     <td>{item.user_address}</td>
                                     <td>

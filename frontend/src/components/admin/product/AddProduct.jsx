@@ -17,9 +17,6 @@ const AddProduct = () => {
     const [picture2, setPicture2] = useState([]);
     const [picture3, setPicture3] = useState([]);
     const [picture4, setPicture4] = useState([]);
-    const [errorlist, setError] = useState([]);
-
-
     const handleImage = (e) => {
         setPicture({ image: e.target.files[0] });
 
@@ -79,13 +76,19 @@ const AddProduct = () => {
 
 
                 });
-                navigate("/admin/allProducts");
-                setError([]);
             }
             else {
-                swal("All Fields are mandetory", "", "error");
-                setError(res.data.errors);
+                let error_messages = res.data.errors;
 
+                if (error_messages) {
+                    console.log(error_messages);
+
+                    const errors_to_display = Object.values(error_messages).join("\n");
+
+                    swal(errors_to_display, "", "error");
+                }
+
+                console.log(res);
             }
         });
 
@@ -132,13 +135,11 @@ const AddProduct = () => {
                                             })
                                         }
                                     </select>
-                                    <small className="text-danger">{errorlist.product_category_id}</small>
                                 </div>
 
                                 <div className="form-group mb-3 col-md-2">
                                     <label>Name</label>
-                                    <input type="text" name="name" onChange={handleInput} value={productInput.name} className="form-control" />
-                                    <small className="text-danger">{errorlist.name}</small>
+                                    <input type="text" name="name" onChange={handleInput} value={productInput.name} className="form-control" required />
                                 </div>
                                 <div className="form-group mb-3">
                                     <label>Description</label>
@@ -148,43 +149,38 @@ const AddProduct = () => {
 
                                     <div className="col-md-8 form-group mb-3">
                                         <label>Price</label>
-                                        <input type="text" name="price" onChange={handleInput} value={productInput.price} className="form-control" />
-                                        <small className="text-danger">{errorlist.selling_price}</small>
+                                        <input type="text" name="price" onChange={handleInput} value={productInput.price} className="form-control" required />
                                     </div>
 
 
                                     <div className="col-md-6 form-group mb-3">
                                         <label>Image </label>
-                                        <input type="file" name="image" onChange={handleImage} className="form-control" />
-                                        <small className="text-danger">{errorlist.image}</small>
+                                        <input type="file" name="image" onChange={handleImage} className="form-control" required />
                                     </div>
                                     <div className="col-md-6 form-group mb-3">
                                         <label>Image 2</label>
-                                        <input type="file" name="image2" onChange={handleImage2} className="form-control" />
-                                        <small className="text-danger">{errorlist.image2}</small>
+                                        <input type="file" name="image2" onChange={handleImage2} className="form-control" required />
                                     </div>
                                     <div className="col-md-6 form-group mb-3">
                                         <label>Image 3</label>
-                                        <input type="file" name="image3" onChange={handleImage3} className="form-control" />
-                                        <small className="text-danger">{errorlist.image3}</small>
+                                        <input type="file" name="image3" onChange={handleImage3} className="form-control" required />
                                     </div>
                                     <div className="col-md-6 form-group mb-3">
                                         <label>Image 4</label>
-                                        <input type="file" name="image4" onChange={handleImage4} className="form-control" />
-                                        <small className="text-danger">{errorlist.image4}</small>
+                                        <input type="file" name="image4" onChange={handleImage4} className="form-control" required />
                                     </div>
 
                                 </div>
                             </div>
 
 
-                        </div>
+                        </div >
                         <button type="submit" className="btn btn-primary px-4 mt-2">Submit</button>
 
-                    </form>
-                </div>
-            </div>
-        </div>
+                    </form >
+                </div >
+            </div >
+        </div >
     );
 };
 

@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
 
 import "./App.css";
-
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Route, Navigate, Routes } from "react-router-dom";
 import Index from "./components/index-page/Index";
-import NavBar from "./components/layouts/NavBar";
-import Footer from "./components/layouts/Footer";
 import Contact from "./components/contact-page/Contact";
 import Shop from "./components/shop-page/Shop";
 import SingleProduct from "./components/single-product-page/SingleProduct";
@@ -21,6 +18,8 @@ import Checkout from "./components/checkout-page/Checkout";
 import EditProduct from "./components/admin/product/EditProduct";
 import axios from "axios";
 import AllOrders from "./components/admin/order/AllOrders";
+import Footer from "./components/layouts/Footer";
+import NavBar from "./components/layouts/NavBar";
 
 
 //number of products shown on a single page
@@ -116,14 +115,9 @@ function App() {
       />
 
       <Routes>
+        {/* PUBLIC ROUTES */}
         <Route path="/" element={<Index />} />
-        <Route path="admin/allOrders" element={<AllOrders />}></Route>
-        <Route path="admin/dashboard" element={<Masterpage />}></Route>
-        <Route path="admin/addProduct" element={<AddProduct />}></Route>
-        <Route path="admin/allProducts" element={<AllProducts addProductId={addProductId} />}></Route>
-        <Route path="admin/allProducts/editProduct/:id" element={<EditProduct id={productId} />}></Route>
         <Route path="/contact" element={<Contact />} />
-
         <Route
           path="/shop"
           element={
@@ -141,52 +135,135 @@ function App() {
         />
         <Route
           path="/single_product/:id"
-          element={<SingleProduct onAddToCart={onAddToCart} />}
+          element={<SingleProduct token={token} onAddToCart={onAddToCart} />}
         />
-
-        <Route path="/orderItems/:id" element={<OrderItems />} />
-
         <Route
           path="/login"
           element={
-            <Login
-              logged_user={logged_user}
-              setLoggedUser={setLoggedUser}
-              addToken={addToken}
-            />
+            token != null ? (
+              <Navigate to="/account/?you_are_already_logged_in" />
+            ) : (
+              <Login
+                logged_user={logged_user}
+                setLoggedUser={setLoggedUser}
+                addToken={addToken}
+              />
+            )
           }
         />
-        <Route path="/register" element={<Register />} />
+        <Route
+          path="/register"
+          element={
+            token != null ? (
+              <Navigate to="/account/?please_log_out_first" />
+            ) : (
+              <Register />
+            )
+          }
+        />
 
+
+
+
+        {/* Authenticated admin user routes !!! NEEDS TO BE ADDED !!!*/}
+        <Route
+          path="/admin/dashboard"
+          element={
+            token != null && logged_user.user_type === "admin" ? (
+              <Masterpage />
+            ) : (
+              <Navigate to="/?you_are_unauthorized_to_enter_this_area" />
+            )
+          }
+        />
+        <Route
+          path="/admin/addProduct"
+          element={
+            token != null && logged_user.user_type === "admin" ? (
+              <AddProduct />
+            ) : (
+              <Navigate to="/?you_are_unauthorized_to_enter_this_area" />
+            )
+          }
+        />
+        <Route
+          path="/admin/allProducts"
+          element={
+            token != null && logged_user.user_type === "admin" ? (
+              <AllProducts addProductId={addProductId} />
+            ) : (
+              <Navigate to="/?you_are_unauthorized_to_enter_this_area" />
+            )
+          }
+        />
+        <Route
+          path="/admin/allProducts/editProduct/:id"
+          element={
+            token != null && logged_user.user_type === "admin" ? (
+              <EditProduct id={productId} />
+            ) : (
+              <Navigate to="/?you_are_unauthorized_to_enter_this_area" />
+            )
+          }
+        />
+
+        {/* Authenticated regular user routes */}
         <Route
           path="/account"
-          element={<Account logged_user={logged_user} />}
+          element={
+            token != null ? (
+              <Account logged_user={logged_user} />
+            ) : (
+              <Navigate to="/login/?please_log_in_first" />
+            )
+          }
+        />
+        <Route
+          path="/orderItems/:id"
+          element={
+            token != null ? (
+              <OrderItems />
+            ) : (
+              <Navigate to="/login/?please_log_in_first" />
+            )
+          }
         />
         <Route
           path="/cart"
           element={
-            <Cart
-              cartItems={cartItems}
-              onAddToCart={onAddToCart}
-              onRemoveFromCart={onRemoveFromCart}
-            />
+            token != null ? (
+              <Cart
+                cartItems={cartItems}
+                onAddToCart={onAddToCart}
+                onRemoveFromCart={onRemoveFromCart}
+              />
+            ) : (
+              <Navigate to="/login/?please_log_in_first" />
+            )
           }
         />
+
         <Route
           path="/checkout"
           element={
-            <Checkout
-              cartItems={cartItems}
-              setCartItems={setCartItems}
-              logged_user={logged_user}
-              setLoggedUser={setLoggedUser}
-            />
+            token != null ? (
+              <Checkout
+                cartItems={cartItems}
+                setCartItems={setCartItems}
+                logged_user={logged_user}
+                setLoggedUser={setLoggedUser}
+              />
+            ) : (
+              <Navigate to="/login/?please_log_in_first" />
+            )
           }
         />
+        {/* ----------------------------------------------------- */}
       </Routes>
 
       <Footer />
-    </BrowserRouter >
+      {/* ----------------------------------------------------- */}
+    </BrowserRouter>
   );
 }
 

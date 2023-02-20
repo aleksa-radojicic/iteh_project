@@ -19,7 +19,7 @@ class ProductFactory extends Factory
         return [
             
                 'name' => fake()->name(),
-                'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae praesentium aperiam consequuntur fugiat esse dicta nihil quas modi voluptas dolore.',
+                'description' => fake()->paragraph(35),
                 'image' => 'featured' . rand(1, 20) . '.jpg',
                 'image2' => 'featured' . rand(1, 20) . '.jpg',
                 'image3' => 'featured' . rand(1, 20) . '.jpg',

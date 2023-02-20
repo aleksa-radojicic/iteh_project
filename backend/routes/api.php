@@ -6,8 +6,6 @@ use App\Http\Controllers\OrderOrderItemController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductCategoryController;
-
-use App\Models\ProductCategory;
 use Illuminate\Support\Facades\Route;
 
 
@@ -24,19 +22,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
 
-    //WORKS
-    Route::get('user', [UserController::class, 'index']);
+    Route::get('/user', [UserController::class, 'index']);
 
-
-
-
-
-
-    //WORKS
-    // Route::get('order_items/{id}', [OrderOrderItemController::class, 'show']);
     Route::get('/order_items/{id}', [OrderOrderItemController::class, 'show']);
 
-    //WORKS
+    Route::post('/orders', [OrderController::class, 'store']);
+
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 
@@ -45,46 +36,25 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function () {
 
     //WORKS
-    // Route::get('orders', [OrderController::class, 'index']);
+    Route::get('/orders', [OrderController::class, 'index']);
 
-    //WORKS
-    Route::get('products', [ProductController::class, 'index']);
-    //WORKS
-    Route::post('products', [ProductController::class, 'store']);
-    //WORKS (x-www-form)
-    // Route::put('products/{id}', [ProductController::class, 'update']);
+    //Products
+    Route::get('/products', [ProductController::class, 'index']);
+    Route::post('/products', [ProductController::class, 'store']);
+    Route::put('/products/{id}', [ProductController::class, 'update']);
+    Route::delete('/products/{id}', [ProductController::class, 'destroy']);
 });
 
 
-
-Route::get('order_items/{id}', [OrderOrderItemController::class, 'show']);
-
-//EVERYTHING BELOW WORKS
-Route::resource('products', ProductController::class)->only(['show']);
-
-Route::get('/login', function () {
-    return response()->json('Please log in');
-})->name('login');
-
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
-Route::get('products', [ProductController::class, 'index']);
 
-//WORKS
 Route::resource('shop/product', ProductController::class)->only(['show']);
-Route::post('admin/products', [ProductController::class, 'store']);
+
+//used on shop page, admin page for addProduct & editProduct
 Route::get('/product_categories', [ProductCategoryController::class, 'index']);
 
-//WORKS
-//HOWEVER, VALIDATION FOR ORDERITEM HAS TO BE IMPLEMENTED
-Route::post('orders', [OrderController::class, 'store']);
+Route::get('/shop', [ProductController::class, 'showProductsPerPage']);
 
-
-
-//WORKS (x-www-form)
-Route::put('products/{id}', [ProductController::class, 'update']);
-Route::get('shop/', [ProductController::class, 'showProductsPerPage']);
-
-Route::get('numofprod/', [ProductController::class, 'showNumberOfProducts']);
-Route::delete('products/{id}', [ProductController::class, 'destroy']);
-Route::get('orders', [OrderController::class, 'index']);
+//used for pagination
+Route::get('/numofprod', [ProductController::class, 'showNumberOfProducts']);

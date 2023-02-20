@@ -1,6 +1,7 @@
 import axios from 'axios';
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+
 import "jquery/dist/jquery.min.js";
 import "datatables.net-dt/js/dataTables.dataTables";
 import "datatables.net-dt/css/jquery.dataTables.min.css";
@@ -10,6 +11,7 @@ import "datatables.net-buttons/js/buttons.flash.js";
 import "datatables.net-buttons/js/buttons.html5.js";
 import "datatables.net-buttons/js/buttons.print.js";
 import $ from "jquery";
+import swal from 'sweetalert';
 
 
 const AllProducts = ({ addProductId }) => {
@@ -18,12 +20,15 @@ const AllProducts = ({ addProductId }) => {
 
     const [loading, setLoading] = useState(true);
     const [viewProduct, setProduct] = useState([]);
+
+
+
     useEffect(() => {
 
         let isMounted = true;
         document.title = "View Product";
 
-        axios.get(`/api/products`).then(res => {
+        axios.get(`/api/admin/products`).then(res => {
             if (isMounted) {
                 if (res != null) {
                     setProduct(res.data.products);
@@ -98,18 +103,23 @@ const AllProducts = ({ addProductId }) => {
         }
     }, []);
 
+
     function setID(id) {
         addProductId(id);
     }
 
     function deleteProduct(id) {
         setDeleted(true);
-        axios.delete('api/products/' + id).then(res => {
+        axios.delete('api/admin/products/' + id).then(res => {
             if (res.data.success === true) {
 
                 setDeleted(true);
-                window.location.reload(true);
-                // navigate("/admin/allProducts");
+                swal('SUCCESSUFUL DELETION', 'success');
+
+                navigate("/admin/dashboard");
+
+
+
             } else {
                 console.log("ERROR");
             }

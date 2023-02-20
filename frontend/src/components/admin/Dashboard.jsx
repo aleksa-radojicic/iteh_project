@@ -60,7 +60,7 @@ const Dashboard = () => {
     useEffect(() => {
 
 
-        axios.get(`/api/products`).then(res => {
+        axios.get(`/api/admin/products`).then(res => {
             console.log(res.data);
 
             if (res != null) {
