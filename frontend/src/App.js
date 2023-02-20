@@ -18,6 +18,7 @@ import OrderItems from "./components/account-page/OrderItems";
 import Checkout from "./components/checkout-page/Checkout";
 import axios from "axios";
 
+
 //number of products shown on a single page
 const page_size = 12;
 
