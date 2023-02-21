@@ -24,7 +24,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/user', [UserController::class, 'index']);
 
-    Route::get('/order_items/{id}', [OrderOrderItemController::class, 'show']);
+    Route::get('/order_items/{id}', [OrderOrderItemController::class, 'show']); 
 
     Route::post('/orders', [OrderController::class, 'store']);
 
@@ -36,25 +36,25 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function () {
 
     //WORKS
-    Route::get('/orders', [OrderController::class, 'index']);
+    Route::get('/orders', [OrderController::class, 'index']); 
 
     //Products
-    Route::get('/products', [ProductController::class, 'index']);
+    Route::get('/products', [ProductController::class, 'index']); 
     Route::post('/products', [ProductController::class, 'store']);
     Route::put('/products/{id}', [ProductController::class, 'update']);
-    Route::delete('/products/{id}', [ProductController::class, 'destroy']);
+    Route::delete('/products/{id}', [ProductController::class, 'destroy']); 
 });
 
 
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']); 
+Route::post('/login', [AuthController::class, 'login']);       
 
 Route::resource('shop/product', ProductController::class)->only(['show']);
 
 //used on shop page, admin page for addProduct & editProduct
 Route::get('/product_categories', [ProductCategoryController::class, 'index']);
 
-Route::get('/shop', [ProductController::class, 'showProductsPerPage']);
+Route::get('/shop', [ProductController::class, 'showProductsPerPage']); 
 
 //used for pagination
-Route::get('/numofprod', [ProductController::class, 'showNumberOfProducts']);
+Route::get('/numofprod', [ProductController::class, 'showNumberOfProducts']); 

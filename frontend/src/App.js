@@ -108,10 +108,11 @@ function App() {
 
   return (
     <BrowserRouter>
+
       <NavBar
         token={token}
         setToken={setToken}
-        cartItems={cartItems}
+
         setLoggedUser={setLoggedUser}
       />
 
@@ -171,7 +172,11 @@ function App() {
           path="/admin/dashboard"
           element={
             token != null && logged_user.user_type === "admin" ? (
-              <Masterpage />
+              <Masterpage
+                token={token}
+                setToken={setToken}
+                logged_user={logged_user}
+                setLoggedUser={setLoggedUser} />
             ) : (
               <Navigate to="/?you_are_unauthorized_to_enter_this_area" />
             )
@@ -207,7 +212,16 @@ function App() {
             )
           }
         />
-
+        <Route
+          path="/admin/allOrders"
+          element={
+            token != null && logged_user.user_type === "admin" ? (
+              <AllOrders />
+            ) : (
+              <Navigate to="/?you_are_unauthorized_to_enter_this_area" />
+            )
+          }
+        />
         {/* Authenticated regular user routes */}
         <Route
           path="/account"

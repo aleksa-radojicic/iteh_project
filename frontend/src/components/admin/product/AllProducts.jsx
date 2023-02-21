@@ -131,6 +131,7 @@ const AllProducts = ({ addProductId }) => {
     const showTable = () => {
         try {
             return viewProduct.map((item, index) => {
+
                 return (
 
 

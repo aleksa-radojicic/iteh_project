@@ -1,28 +1,41 @@
+import axios from 'axios';
 import React from 'react';
-import { Link } from 'react-router-dom';
-const Navbar = () => {
+import { Link, useNavigate } from 'react-router-dom';
+
+const Navbar = ({ token, setToken, logged_user, setLoggedUser }) => {
+    const navigate = useNavigate();
+
+    function handleLogout() {
+        axios.post("api/logout")
+            .then(function (response) {
+                console.log(JSON.stringify(response.data));
+                window.sessionStorage.setItem("auth_token", "");
+                console.log(response.data);
+
+
+                setLoggedUser([]);
+
+                //delete token
+                setToken();
+                navigate("/?successfuly_logged_out");
+            })
+            .catch(function (error) {
+                console.log(error);
+                alert("Couldn't log out.");
+                navigate("/");
+            });
+    }
     return (
         <nav className="sb-topnav navbar navbar-expand navbar-dark bg-dark">
 
             <Link className="navbar-brand ps-3" to="/admin/dashboard">ADMIN DASHBOARD</Link>
 
-            <button className="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i className="fas fa-bars"></i></button>
-
-            <form className="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-                <div className="input-group">
-                    <input className="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-                    <button className="btn btn-primary" id="btnNavbarSearch" type="button"><i className="fas fa-search"></i></button>
-                </div>
-            </form>
-
-            <ul className="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <ul className="navbar-nav ms-auto me-0 me-md-3 my-2 my-md-0">
                 <li className="nav-item dropdown">
                     <Link to="#" className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i className="fas fa-user fa-fw"></i></Link>
                     <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><Link className="dropdown-item" to="#!">Settings</Link></li>
-                        <li><Link className="dropdown-item" to="#!">Activity Log</Link></li>
-                        <li><hr className="dropdown-divider" /></li>
-                        <li><Link className="dropdown-item" to="#!">Logout</Link></li>
+
+                        <li ><Link className="dropdown-item" onClick={handleLogout}>Logout</Link></li>
                     </ul>
                 </li>
             </ul>

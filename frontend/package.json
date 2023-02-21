@@ -20,6 +20,7 @@
     "helmet": "^6.0.1",
     "jqgrid": "^4.6.4",
     "jquery": "^3.6.3",
+    "jquery-ui": "^1.13.2",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.0",

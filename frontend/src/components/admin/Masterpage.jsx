@@ -14,38 +14,25 @@ import Footer from './Footer';
 import Dashboard from './Dashboard';
 
 // import routes from '../../routes/routes';
-const Masterpage = () => {
+const Masterpage = ({ token, setToken, logged_user, setLoggedUser }) => {
+    console.log(token);
+    console.log(logged_user);
     return (
         <div className="sb-nav-fixed">
-            <Navbar />
+            <Navbar token={token} setToken={setToken} logged_user={logged_user} setLoggedUser={setLoggedUser} />
+
             <div id="layoutSidenav">
 
+
                 <div id="layoutSidenav_nav">
-                    <Sidebar />
+                    <Sidebar logged_user={logged_user} />
                 </div>
 
                 <div id="layoutSidenav_content">
                     <main>
                         <Dashboard />
 
-                        {/* <Switch>
-                            {routes.map((route, idx) => {
-                                return (
-                                    route.component && (
-                                        <Route
-                                            key={idx}
-                                            path={route.path}
-                                            exact={route.exact}
-                                            name={route.name}
-                                            render={(props) => (
-                                                <route.component {...props} />
-                                            )}
-                                        />
-                                    )
-                                );
-                            })}
-                            <Redirect from="/admin" to="/admin/dashboard" />
-                        </Switch> */}
+
 
                     </main>
                     <Footer />

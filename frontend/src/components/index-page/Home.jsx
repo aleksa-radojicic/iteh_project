@@ -1,13 +1,13 @@
-import React from 'react'
+import React from 'react';
 import { Link } from "react-router-dom";
-
+import { useNavigate, } from "react-router-dom";
 
 function Home() {
   
 
   return (
     <section id="home">
-      <div class="container mt-0 pt-0" >
+      <div className="container mt-0 pt-0" >
         <h5>Aquarium Keep</h5>
         <h1>
           <span>Affordable Prices</span>
@@ -16,7 +16,9 @@ function Home() {
           We offer quality freshwater and marine aquaristic products for
           everyone's taste and wallet.
         </p>
-        <Link to="/shop"><button>Shop Now</button></Link>
+        <button onClick={goToShop}>
+          Shop now
+        </button>
       </div>
     </section >
   );

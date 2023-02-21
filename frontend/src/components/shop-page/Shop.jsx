@@ -68,16 +68,17 @@ const Shop = ({
       </Helmet>
 
       <section id="featured" className="my-5 py-5">
-        <div className="container mt-5 py-5">
+        <div className="container">
           <h3>Our Products</h3>
           <hr />
           <p>Here you can check our products</p>
         </div>
 
-        <div className="category-box">
+        <div className="container">
           <h4>Select Category</h4>
           <select
             id="category"
+            className="form-select-sm form-select-sm"
             name="product_category_id"
             onChange={handleInput}
           //value={productInput.product_category_id}
@@ -93,7 +94,6 @@ const Shop = ({
           </select>
 
         </div>
-
         <div className="row mx-auto container">
           {products_on_current_page.map((product) => (
             <Product

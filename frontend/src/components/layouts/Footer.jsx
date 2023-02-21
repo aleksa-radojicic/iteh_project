@@ -1,6 +1,13 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 
 function Footer() {
+  // needed so that Footer doesn't show on admin routes
+  const location = useLocation();
+  if (location.pathname.includes("admin")) {
+    return null;
+  }
+
   return (
     <footer className="footer mt-5 py-5">
       <div className="row container mx-auto pt-5">
