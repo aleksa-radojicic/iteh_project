@@ -16,7 +16,7 @@ function Home() {
           We offer quality freshwater and marine aquaristic products for
           everyone's taste and wallet.
         </p>
-        <Link to=""><button>Shop Now</button></Link>
+        <Link to="/shop"><button>Shop Now</button></Link>
       </div>
     </section >
   );

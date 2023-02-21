@@ -1,12 +1,8 @@
 import React from "react";
-import { useNavigate,} from "react-router-dom";
-
+import { Link } from "react-router-dom";
 function Banner() {
 
-  let navigate = useNavigate();
-  function goToShop() {
-    navigate('/shop');
-  }
+ 
 
   return (
     <section id="banner" className="my-5 py-5">
@@ -16,7 +12,7 @@ function Banner() {
           Check our new collection of corals <br /> UP to 30% OFF for registered
           users
         </h1>
-        <button className="text-uppercase" onClick={goToShop}>Shop Now</button>
+        <Link to="/shop"><button className="text-uppercase">Shop Now</button></Link>
       </div>
     </section>
   );

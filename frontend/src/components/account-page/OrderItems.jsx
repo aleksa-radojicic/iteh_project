@@ -15,12 +15,10 @@ const OrderItems = () => {
   const handlePrint = useReactToPrint({
       content: () => componentRef.current,
       documentTitle: "order-items",
-      onAfterPrint: ()=>alert('Print success')
   });
 
   useEffect(() => {
     axios
-      //.get("api/admin/order/" + id+"/order_items")
       .get("api/order_items/" + id)
       .then((res) => {
         console.log(res);
