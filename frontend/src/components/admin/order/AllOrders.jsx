@@ -21,7 +21,7 @@ const AllOrders = () => {
         let isMounted = true;
         document.title = "View Product";
 
-        axios.get(`/api/orders`).then(res => {
+        axios.get(`/api/admin/orders`).then(res => {
             if (isMounted) {
                 if (res != null) {
                     setOrders(res.data.orders);

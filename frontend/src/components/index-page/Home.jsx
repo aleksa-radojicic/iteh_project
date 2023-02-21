@@ -10,7 +10,7 @@ function Home() {
 
   return (
     <section id="home">
-      <div class="container mt-0 pt-0" >
+      <div className="container mt-0 pt-0" >
         <h5>Aquarium Keep</h5>
         <h1>
           <span>Affordable Prices</span>

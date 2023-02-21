@@ -1,9 +1,13 @@
 import axios from "axios";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-function NavBar({ token, setToken, countCartItems, setLoggedUser }) {
+
+function NavBar({ token, setToken, setLoggedUser }) {
+  //needed so that NavBar doesn't show on admin routes
+  const location = useLocation();
+
   let navigate = useNavigate();
 
   function handleLogout() {
@@ -13,7 +17,7 @@ function NavBar({ token, setToken, countCartItems, setLoggedUser }) {
         window.sessionStorage.setItem("auth_token", "");
         console.log(response.data);
 
-        //delete logged user
+
         setLoggedUser([]);
 
         //delete token
@@ -26,8 +30,11 @@ function NavBar({ token, setToken, countCartItems, setLoggedUser }) {
         navigate("/");
       });
   }
+  if (location.pathname.includes("admin")) {
+    return null;
+  }
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-white py-3 mb-2 fixed-top">
+    <nav className="navbar navbar-expand-lg navbar-light bg-white py-3 mb-2 ">
       <div className="container">
         <img
           className="logo"
@@ -93,14 +100,7 @@ function NavBar({ token, setToken, countCartItems, setLoggedUser }) {
               <Link className="nav-link" to="/cart">
                 <i className="fas fa-shopping-cart"></i>
               </Link>
-              {/* <a href="/cart">
-                Cart{' '}
-                {countCartItems ? (
-                  <button className="badge">{countCartItems}</button>
-                ) : (
-                  ''
-                )}
-              </a>{' '} */}
+
             </li>
           </ul>
         </div>

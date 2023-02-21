@@ -34,9 +34,9 @@ const SingleProduct = ({ token, onAddToCart }) => {
 
     if (token != null) {
       onAddToCart(product);
-      navigate("/cart")
+      navigate("/cart");
     } else {
-      navigate("/login/?please_log_in_first")
+      navigate("/login/?please_log_in_first");
     }
   }
 
@@ -102,7 +102,8 @@ const SingleProduct = ({ token, onAddToCart }) => {
               <button className="buy-btn" onClick={addToCartTrigger}>
                 Add To Cart
               </button>
-
+              <h3>Product category</h3>
+              <p>{product.product_category.name}</p>
               <h4 className="mt-5 mb-5">Product details</h4>
               <span>{product.description}</span>
             </div>

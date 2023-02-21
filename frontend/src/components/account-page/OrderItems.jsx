@@ -1,5 +1,5 @@
-import React,{useRef} from "react";
-import {useReactToPrint} from 'react-to-print'
+import React, { useRef } from "react";
+import { useReactToPrint } from 'react-to-print';
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -13,9 +13,9 @@ const OrderItems = () => {
   //print pdf
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
-      content: () => componentRef.current,
-      documentTitle: "order-items",
-      onAfterPrint: ()=>alert('Print success')
+    content: () => componentRef.current,
+    documentTitle: "order-items",
+    onAfterPrint: () => alert('Print success')
   });
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const OrderItems = () => {
   return (
     <><div ref={componentRef}>
       <section className="orders container my-5 py-5" >
-        
+
         <div className="container mt-5">
           <h2 className="font-weight-bold text-center">Order details</h2>
           <hr className="mx-auto" />
@@ -48,49 +48,51 @@ const OrderItems = () => {
             <th>Subtotal</th>
           </tr>
           <tbody>
-          {orderItems == null ? (
-            <div className="abv">
-              <Spinner />
-            </div>
-          ) : (
-            orderItems.map((item) => {
-              return (
-                
-                  
-                
-                <tr>
-                  <td>
-                    <div className="product-info">
-                      <img
-                        src={require("../../images/" + item.product.image)}
-                      />
-                      <div>
-                        <p className="mt-3">{item.product["name"]}</p>
+            {orderItems == null ? (
+              <div className="abv">
+                <Spinner />
+              </div>
+            ) : (
+              orderItems.map((item) => {
+                return (
+
+
+
+                  <tr>
+                    <td>
+                      <div className="product-info">
+                        <img
+                          src={require("../../images/" + item.product.image)}
+                        />
+                        <div>
+                          <p className="mt-3">{item.product["name"]}</p>
+                        </div>
                       </div>
-                    </div>
-                  </td>
+                    </td>
 
-                  <td>
-                    <span> ${item.price}</span>
-                  </td>
+                    <td>
+                      <span> ${item.price}</span>
+                    </td>
 
-                  <td>
-                    <span>{item.quantity}</span>
-                  </td>
+                    <td>
+                      <span>{item.quantity}</span>
+                    </td>
 
-                  <td>
-                    <span>${item.quantity * item.price}</span>
-                  </td>
-                </tr>
-              );
-            })
-          )}
+                    <td>
+                      <span>${item.quantity * item.price}</span>
+                    </td>
+
+                  </tr>
+
+                );
+              })
+            )}
           </tbody>
         </table>
-        
-        
+
+
       </section>
-      </div><button className="btn-pdf" onClick={handlePrint}>Print order</button>
+    </div><button className="btn-pdf" onClick={handlePrint}>Print order</button>
     </>
   );
 };
