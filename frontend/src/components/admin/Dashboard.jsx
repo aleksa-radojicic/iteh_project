@@ -155,14 +155,6 @@ const Dashboard = () => {
             </ol>
 
             <div class="row">
-                {/* <div class="col-xl-8">
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <AllOrders />
-                        </div>
-                        <div class="card-body"><canvas id="myAreaChart" width="4%" height="40"></canvas></div>
-                    </div>
-                </div> */}
                 <div class="col-xl-12">
                     <div class="col card mb-4">
                         <div class="card-header">

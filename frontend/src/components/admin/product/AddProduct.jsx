@@ -1,9 +1,11 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import swal from 'sweetalert';
+import Image from "react-bootstrap/Image";
 const AddProduct = () => {
-    let navigate = useNavigate();
+
+
     const [categorylist, setCategorylist] = useState([]);
     const [productInput, setProduct] = useState({
         product_category_id: 1,
@@ -18,23 +20,27 @@ const AddProduct = () => {
     const [picture3, setPicture3] = useState([]);
     const [picture4, setPicture4] = useState([]);
     const handleImage = (e) => {
-        setPicture({ image: e.target.files[0] });
+        let temp = e.target.files[0];
+        setPicture({ image: temp.name });
 
 
     };
     const handleImage2 = (e) => {
-
-        setPicture2({ image2: e.target.files[0] });
+        let temp = e.target.files[0];
+        setPicture2({ image2: temp.name });
 
     };
     const handleImage3 = (e) => {
+        let temp = e.target.files[0];
 
-        setPicture3({ image3: e.target.files[0] });
+        setPicture3({ image3: temp.name });
 
     };
     const handleImage4 = (e) => {
 
-        setPicture4({ image4: e.target.files[0] });
+        let temp = e.target.files[0];
+
+        setPicture4({ image4: temp.name });
 
     };
 
@@ -52,6 +58,7 @@ const AddProduct = () => {
         formData.append('image2', picture2.image2.name);
         formData.append('image3', picture3.image3.name);
         formData.append('image4', picture4.image4.name);
+
         formData.append('product_category_id', parseInt(productInput.product_category_id));
         formData.append('name', productInput.name);
         formData.append('description', productInput.description);
@@ -60,6 +67,7 @@ const AddProduct = () => {
         axios.post(`/api/admin/products`, formData).then(res => {
             console.log(res);
             if (res.data.success === true) {
+
 
                 swal("Success", res.data.message, "success");
                 setProduct({
@@ -114,7 +122,7 @@ const AddProduct = () => {
             <div className="card mt-4">
                 <div className="card-header">
                     <h4>Add Product
-                        <Link to="/admin/view-product" className="btn btn-primary btn-sm float-end">View Product</Link>
+                        <Link to="/admin/allProducts" className="btn btn-primary btn-sm float-end">View Product</Link>
                     </h4>
                 </div>
                 <div className="card-body">
@@ -154,20 +162,29 @@ const AddProduct = () => {
 
 
                                     <div className="col-md-6 form-group mb-3">
+
                                         <label>Image </label>
                                         <input type="file" name="image" onChange={handleImage} className="form-control" required />
+                                        {picture.image ? <Image src={require(`../../../../src/images/${picture.image}`)} height="50%" width="50px" /> : ''}
+
                                     </div>
                                     <div className="col-md-6 form-group mb-3">
                                         <label>Image 2</label>
                                         <input type="file" name="image2" onChange={handleImage2} className="form-control" required />
+                                        {picture2.image2 ? <Image src={require(`../../../../src/images/${picture2.image2}`)} height="50%" width="50px" /> : ''}
+
                                     </div>
                                     <div className="col-md-6 form-group mb-3">
                                         <label>Image 3</label>
                                         <input type="file" name="image3" onChange={handleImage3} className="form-control" required />
+                                        {picture3.image3 ? <Image src={require(`../../../../src/images/${picture3.image3}`)} height="50%" width="50px" /> : ''}
+
                                     </div>
                                     <div className="col-md-6 form-group mb-3">
                                         <label>Image 4</label>
                                         <input type="file" name="image4" onChange={handleImage4} className="form-control" required />
+                                        {picture4.image4 ? <Image src={require(`../../../../src/images/${picture4.image4}`)} height="50%" width="50px" /> : ''}
+
                                     </div>
 
                                 </div>

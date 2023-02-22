@@ -15,7 +15,7 @@ const OrderItems = () => {
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
     documentTitle: "order-items",
-    onAfterPrint: () => alert('Print success')
+
   });
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const OrderItems = () => {
       .catch((e) => {
         console.log(e.response.data);
       }, []);
-  }, []);
+  }, [id]);
 
   return (
     <><div ref={componentRef}>
@@ -62,7 +62,7 @@ const OrderItems = () => {
                     <td>
                       <div className="product-info">
                         <img
-                          src={require("../../images/" + item.product.image)}
+                          src={require("../../images/" + item.product.image)} alt="prodImage"
                         />
                         <div>
                           <p className="mt-3">{item.product["name"]}</p>

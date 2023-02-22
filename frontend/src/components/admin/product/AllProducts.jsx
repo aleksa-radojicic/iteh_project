@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { createContext, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import "jquery/dist/jquery.min.js";
@@ -173,9 +173,11 @@ const AllProducts = ({ addProductId }) => {
 
                         <tbody>
                             {showTable()}
+
                         </tbody>
                     </table>
                 </div>
+                <button onClick={() => { navigate("/admin/dashboard"); }}>Admin dashboard</button>
             </div>
         </div>
     );

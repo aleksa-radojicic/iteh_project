@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
-
 import axios from 'axios';
-
 import "jquery/dist/jquery.min.js";
 import "datatables.net-dt/js/dataTables.dataTables";
 import "datatables.net-dt/css/jquery.dataTables.min.css";
@@ -119,6 +116,7 @@ const AllOrders = () => {
 
     return (
 
+
         <div className='allProducts'>
             <div className="container-sm">
                 <div className="table-responsive p-0 pb-2">
@@ -143,6 +141,7 @@ const AllOrders = () => {
                 </div>
             </div>
         </div>
+
     );
 
 

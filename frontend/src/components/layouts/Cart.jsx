@@ -9,30 +9,34 @@ const Cart = (props) => {
   console.log(cartItems);
 
   return (
-    <div class="card col-12">
-      <div className="block col-6">
+    <div className="card col-12">
+      <div className="block col-6 align-self-center">
         <h2>Cart Items</h2>
         <div className="cart-div">
           {cartItems.length === 0 && <div>Cart is empty</div>}
           {cartItems.map((item) => (
             <div key={item.id} className="row">
-              <div className="col-2">{item.product.name}</div>
-              <div className="col-2">
+              <div className="col-4">{item.product.name}</div>
+              <div className="col-4 ">
+
+
                 <button
                   onClick={() => onRemoveFromCart(item.product)}
-                  className="button-remove"
+                  className="button-remove "
                 >
                   -
-                </button>{" "}
+                </button>
+
                 <button
                   onClick={() => onAddToCart(item.product)}
                   className="button-add"
                 >
                   +
                 </button>
+
               </div>
 
-              <div className="col-2 text-right">
+              <div className="col-4 ">
                 {item.quantity} x ${item.product.price.toFixed(2)}
               </div>
             </div>
@@ -43,10 +47,10 @@ const Cart = (props) => {
               <hr />
 
               <div className="row">
-                <div className="col-2">
+                <div className="col-6">
                   <strong>Total Price</strong>
                 </div>
-                <div className="col-1 text-right">
+                <div className="col-6.ml-10 ">
                   <strong>${totalPrice.toFixed(2)}</strong>
                 </div>
               </div>

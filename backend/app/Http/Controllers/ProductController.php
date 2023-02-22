@@ -74,7 +74,7 @@ class ProductController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|min:5',
-            'description' => 'required|string|min:10|max:100',
+            'description' => 'required|string|min:10|max:3000',
             'price' => 'required',
             'image' => 'required'
         ]);
@@ -101,8 +101,6 @@ class ProductController extends Controller
             'success' => true,
             'message' => 'Successfully created a product',
         ]);
-
-        return $request;
     }
 
     /**
@@ -143,19 +141,21 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // $validator = Validator::make($request->all(), [
-        //     'name' => 'required|string',
-        //     'description' => 'required|string|max:100',
-        //     'price' => 'required',
-        //     'image' => 'required'
-        // ]);
 
-        // if ($validator->fails()) {
-        //     return response()->json([
-        //         'success' => false,
-        //         'errors' => $validator->errors()
-        //     ]);
-        // }
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|min:5',
+            'description' => 'required|string|min:10|max:3000',
+            'price' => 'required',
+            'image' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()
+            ]);
+        }
+
         $product = Product::find($id);
         $product->name = $request->name;
         $product->description = $request->description;

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import swal from "sweetalert";
 
 const Login = ({ setLoggedUser, addToken }) => {
   let navigate = useNavigate();
@@ -29,7 +30,7 @@ const Login = ({ setLoggedUser, addToken }) => {
     axios
       .post("api/login", user)
       .then((res) => {
-        // console.log(res.data);
+
         if (res.data.success === true) {
           window.sessionStorage.setItem("auth_token", res.data.access_token);
           addToken(res.data.access_token);
@@ -39,7 +40,7 @@ const Login = ({ setLoggedUser, addToken }) => {
           setLoginStatus();
           setLoggedUser(res.data.user);
 
-          alert("Successfully logged in");
+          swal("Successfully logged in");
 
           if (res.data.user.user_type === "admin") {
             navigate("/admin/dashboard");

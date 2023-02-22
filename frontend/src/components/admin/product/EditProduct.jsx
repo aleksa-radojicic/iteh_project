@@ -13,35 +13,39 @@ function EditProduct({ id }) {
         description: '',
         price: '',
 
-
     });
-    const [picture, setPicture] = useState([]);
+    const [picture, setPicture] = useState([
+
+    ]);
     const [picture2, setPicture2] = useState([]);
     const [picture3, setPicture3] = useState([]);
     const [picture4, setPicture4] = useState([]);
-    const [errorlist, setError] = useState([]);
+
     const [loading, setLoading] = useState(true);
 
 
 
     const handleImage = (e) => {
-        setPicture({ image: e.target.files[0] });
-
+        const a = e.target.files[0];
+        setPicture(a.name);
+        // console.log(pict)
 
     };
     const handleImage2 = (e) => {
-
-        setPicture2({ image2: e.target.files[0] });
-
+        const b = e.target.files[0];
+        setPicture2(b.name);
+        // console.log(picture2)
     };
     const handleImage3 = (e) => {
 
-        setPicture3({ image3: e.target.files[0] });
+        const c = e.target.files[0];
+        setPicture3(c.name);
 
     };
     const handleImage4 = (e) => {
 
-        setPicture4({ image4: e.target.files[0] });
+        const d = e.target.files[0];
+        setPicture4(d.name);
 
     };
 
@@ -66,7 +70,11 @@ function EditProduct({ id }) {
             if (res != null) {
 
                 setProduct(res.data.product);
+                setPicture(res.data.product.image);
 
+                setPicture2(res.data.product.image2);
+                setPicture3(res.data.product.image3);
+                setPicture4(res.data.product.image4);
             }
             else {
 
@@ -82,10 +90,10 @@ function EditProduct({ id }) {
         e.preventDefault();
         const obj = {
 
-            'image': picture.image.name,
-            'image2': picture2.image2.name,
-            'image3': picture3.image3.name,
-            'image4': picture4.image4.name,
+            'image': picture,
+            'image2': picture2,
+            'image3': picture3,
+            'image4': picture4,
             'product_category_id': productInput.product_category_id,
             'name': productInput.name,
             'description': productInput.description,
@@ -94,7 +102,6 @@ function EditProduct({ id }) {
 
         const options = {
             method: 'PUT',
-
             data: obj,
             url: 'api/admin/products/' + id,
         };
@@ -118,14 +125,22 @@ function EditProduct({ id }) {
 
 
                 });
+
                 navigate("/admin/allProducts");
-                setError([]);
+
             }
 
             else {
-                console.log("error update-u");
-                swal("Error", res.data.errors, "error");
-                navigate("/admin/allProducts");
+                let error_messages = res.data.errors;
+
+                if (error_messages) {
+                    console.log(error_messages);
+
+                    const errors_to_display = Object.values(error_messages).join("\n");
+
+                    swal(errors_to_display, "", "error");
+                }
+
             }
         });
 
@@ -140,7 +155,7 @@ function EditProduct({ id }) {
             <div className="card mt-4">
                 <div className="card-header">
                     <h4>Edit Product
-                        <Link to="/admin/view-product" className="btn btn-primary btn-sm float-end">View Product</Link>
+                        <Link to="/admin/allProducts" className="btn btn-primary btn-sm float-end">View Product</Link>
                     </h4>
                 </div>
                 <div className="card-body">
@@ -151,8 +166,8 @@ function EditProduct({ id }) {
 
                                 <div className="form-group mb-3">
                                     <label>Select Category</label>
-                                    <select required name="product_category_id" onChange={handleInput} value={productInput.product_category_id} className="form-control">
-                                        {/*  <option>Select Category</option> */}
+                                    <select required='required' name="product_category_id" onChange={handleInput} value={productInput.product_category_id} className="form-control">
+                                        <option value="">--Select Category--</option>
                                         {
                                             categorylist.map((item) => {
                                                 return (
@@ -161,13 +176,11 @@ function EditProduct({ id }) {
                                             })
                                         }
                                     </select>
-                                    <small className="text-danger">{errorlist.category_id}</small>
                                 </div>
 
                                 <div className="form-group mb-3">
                                     <label>Name</label>
                                     <input required type="text" name="name" onChange={handleInput} value={productInput.name} className="form-control" />
-                                    <small className="text-danger">{errorlist.name}</small>
                                 </div>
                                 <div className="form-group mb-3">
                                     <label>Description</label>
@@ -179,33 +192,33 @@ function EditProduct({ id }) {
 
 
                             <div className="row">
-
+                                <p>{picture}</p>
                                 <div className="col-md-4 form-group mb-3">
                                     <label>Price</label>
                                     <input required type="text" name="price" onChange={handleInput} value={productInput.price} className="form-control" />
-                                    {/* <small className="text-danger">{errorlist.selling_price}</small> */}
+
                                 </div>
                                 <div className="col-md-8 form-group mb-3">
                                     <label>Image</label>
                                     <input required type="file" name="image" onChange={handleImage} className="form-control" />
-                                    <img src={require(`../../../../src/images/featured1.jpg`)} width="50px" alt={productInput.name} />
-                                    <small className="text-danger">{errorlist.image}</small>
+                                    <img src={require(`../../../../src/images/${picture}`)} height="70%" width="60px" alt={productInput.name} />
+
                                 </div>
 
                                 <div className="col-md-6 form-group mb-3">
                                     <label>Image 2</label>
                                     <input required type="file" name="image2" onChange={handleImage2} className="form-control" />
-                                    <small className="text-danger">{errorlist.image2}</small>
+                                    <img src={require(`../../../../src/images/${picture2}`)} height="80%" width="60px" alt={productInput.name} />
                                 </div>
                                 <div className="col-md-6 form-group mb-3">
                                     <label>Image 3</label>
                                     <input required type="file" name="image3" onChange={handleImage3} className="form-control" />
-                                    <small className="text-danger">{errorlist.image3}</small>
+                                    <img src={require(`../../../../src/images/${picture3}`)} height="80%" width="60px" alt={productInput.name} />
                                 </div>
                                 <div className="col-md-6 form-group mb-3">
                                     <label>Image 4</label>
                                     <input required type="file" name="image4" onChange={handleImage4} className="form-control" />
-                                    <small className="text-danger">{errorlist.image4}</small>
+                                    <img src={require(`../../../../src/images/${picture4}`)} height="80%" width="60px" alt={productInput.name} />
                                 </div>
 
                             </div>
