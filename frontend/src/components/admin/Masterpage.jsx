@@ -1,19 +1,10 @@
 import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
-
-// import 'bootstrap/dist/js/bootstrap.bundle.js';
 import "../../assets/admin/css/styles.css";
-// import "../../../assets/admin/js/datatables-simple-demo";
-
-// import "../../../assets/admin/js/scripts";
-
-import routes from "../../routes/routes";
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
 import Dashboard from './Dashboard';
 
-// import routes from '../../routes/routes';
 const Masterpage = ({ token, setToken, logged_user, setLoggedUser }) => {
     console.log(token);
     console.log(logged_user);
@@ -31,9 +22,6 @@ const Masterpage = ({ token, setToken, logged_user, setLoggedUser }) => {
                 <div id="layoutSidenav_content">
                     <main>
                         <Dashboard />
-
-
-
                     </main>
                     <Footer />
                 </div>

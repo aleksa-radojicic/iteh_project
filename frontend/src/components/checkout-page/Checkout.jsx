@@ -55,9 +55,7 @@ const Checkout = ({ cartItems, setCartItems, logged_user, setLoggedUser }) => {
         } else {
           let error_messages = res.data.errors;
           console.log(error_messages);
-
           const errors_to_display = Object.values(error_messages).join("\n");
-
           alert(errors_to_display);
           console.log(res.data);
         }
@@ -135,10 +133,6 @@ const Checkout = ({ cartItems, setCartItems, logged_user, setLoggedUser }) => {
           </form>
         </div>
       </section>
-
-      {/* 
-  <!--Footer-->
-  <?php require_once('layouts/footer.php'); ?> */}
     </>
   );
 };

@@ -6,7 +6,7 @@ function New() {
       <div className="row p-0 m-0">
         {/* <!--One--> */}
         <div className="one col-lg-4 col-md-12 col-sm-12 p-0">
-          <img className="img-fluid" src={require("../../images/1.jpg")} />
+          <img className="img-fluid" src={require("../../images/1.jpg")} alt='img1' />
           <div className="details">
             <h2>Food for Freshwater Fish</h2>
             <button className="text-uppercase">Shop Now</button>
@@ -15,7 +15,7 @@ function New() {
 
         {/* <!--Two--> */}
         <div className="one col-lg-4 col-md-12 col-sm-12 p-0">
-          <img className="img-fluid" src={require("../../images/2.jpg")} />
+          <img className="img-fluid" src={require("../../images/2.jpg")} alt='img2' />
           <div className="details">
             <h2>External Filters</h2>
             <button className="text-uppercase">Shop Now</button>
@@ -24,7 +24,7 @@ function New() {
 
         {/* <!--Three--> */}
         <div className="one col-lg-4 col-md-12 col-sm-12 p-0">
-          <img className="img-fluid" src={require("../../images/3.jpg")} />
+          <img className="img-fluid" src={require("../../images/3.jpg")} alt='img3' />
           <div className="details">
             <h2>Goldfish 50% OFF</h2>
             <button className="text-uppercase">Shop Now</button>

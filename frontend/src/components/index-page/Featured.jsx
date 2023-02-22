@@ -10,7 +10,7 @@ function Featured() {
       </div>
       <div className="row mx-auto container-fluid">
         <div className="product text-center col-lg-3 col-md-4 col-sm-12">
-          <img className="img-fluid mb-3" src={require("../../images/featured1.jpg")} />
+          <img className="img-fluid mb-3" src={require("../../images/featured1.jpg")} alt='fet1' />
 
           <div className="star">
             <i className="fas fa-star"></i>
@@ -26,7 +26,7 @@ function Featured() {
         </div>
 
         <div className="product text-center col-lg-3 col-md-4 col-sm-12">
-          <img className="img-fluid mb-3" src={require("../../images/featured2.jpg")} />
+          <img className="img-fluid mb-3" src={require("../../images/featured2.jpg")} alt='fet2' />
 
           <div className="star">
             <i className="fas fa-star"></i>
@@ -42,7 +42,7 @@ function Featured() {
         </div>
 
         <div className="product text-center col-lg-3 col-md-4 col-sm-12">
-          <img className="img-fluid mb-3" src={require("../../images/featured3.jpg")} />
+          <img className="img-fluid mb-3" src={require("../../images/featured3.jpg")} alt='fet3' />
 
           <div className="star">
             <i className="fas fa-star"></i>
@@ -58,7 +58,7 @@ function Featured() {
         </div>
 
         <div className="product text-center col-lg-3 col-md-4 col-sm-12">
-          <img className="img-fluid mb-3" src={require("../../images/featured4.jpg")} />
+          <img className="img-fluid mb-3" src={require("../../images/featured4.jpg")} alt='fet4' />
 
           <div className="star">
             <i className="fas fa-star"></i>

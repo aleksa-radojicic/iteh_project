@@ -36,11 +36,13 @@ function NavBar({ token, setToken, setLoggedUser }) {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-white py-3 mb-2 ">
       <div className="container">
-        <img
-          className="logo"
-          src={require("../../images/logo.jpg")}
-          alt="logo"
-        />
+        <Link to='/'>
+          <img
+            className="logo"
+            src={require("../../images/logo.jpg")}
+            alt="logo"
+          />
+        </Link>
         <button
           className="navbar-toggler"
           type="button"

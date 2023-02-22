@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import swal from "sweetalert";
 
 const Register = () => {
   let navigate = useNavigate();
@@ -23,7 +24,7 @@ const Register = () => {
       .then((res) => {
         if (res.data.success === true) {
           console.log(res.data);
-          alert("Successful registration.");
+          swal("Successful registration.");
           navigate("/login");
         } else {
           let error_messages = res.data.errors;
@@ -31,12 +32,12 @@ const Register = () => {
 
           const errors_to_display = Object.values(error_messages).join("\n");
 
-          alert(errors_to_display);
+          swal(errors_to_display);
         }
       })
       .catch((e) => {
         console.log(e.response.data);
-        alert("Couldn't register. Please try again later.");
+        swal("Couldn't register. Please try again later.");
       });
   }
   return (
@@ -95,14 +96,7 @@ const Register = () => {
               />
             </div>
 
-            {/* <div style={{ color: "red" }} className="form-group">
-                                <p id="passwordsMatchStatus"></p>
-                            </div>
 
-                            <div className="form-group">
-                                <label>Confirm Password</label>
-                                <input type="password"  className="form-control" id="register-confirm-password" name="confirmPassword" placeholder="Confirm Password" required />
-                            </div> */}
             <div className="form-group">
               <input
                 type="submit"

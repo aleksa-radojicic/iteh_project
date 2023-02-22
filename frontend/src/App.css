@@ -386,8 +386,7 @@ footer p {
 }
 
 /* Cart */
-.cart-div {
-}
+
 .cart table {
   width: 100%;
   border-collapse: collapse;
@@ -652,13 +651,14 @@ th:last-child {
 
 .button-remove {
   background-color: #40c0f0;
-  width: 1.2rem;
+  width: 0.6rem;
+  height: 1.9rem;
 }
 
 .button-add {
   background-color: #f04040;
-  width: 1.2rem;
-  border-radius: 122cap;
+  width: 0.6rem;
+  height: 1.9rem;
 }
 .row {
   display: flex;

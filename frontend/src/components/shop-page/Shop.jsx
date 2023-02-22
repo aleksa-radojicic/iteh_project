@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Pagination from "./Pagination";
 import Product from "./Product";
 import "../../shop.css";
@@ -16,11 +16,9 @@ const Shop = ({
   setSelectedCategory,
 }) => {
   const [products_on_current_page, setProductsOnCurrentPage] = useState([]);
-
   const [categorylist, setCategorylist] = useState([]);
 
-  //Id of selected category
-  //const [selectedCategory, setSelectedCategory] = useState();
+
 
   const handleInput = (e) => {
     console.log(e.target);
@@ -29,20 +27,18 @@ const Shop = ({
   };
 
   useEffect(() => {
-    let isMounted = true;
+
 
     axios.get(`/api/product_categories`).then((res) => {
       console.log(res.data);
-      // if (isMounted) {
+
       if (res != null) {
         setCategorylist(res.data.product_categories);
       }
-      // }
+
     });
 
-    return () => {
-      isMounted = false;
-    };
+
   }, []);
 
   useEffect(() => {
@@ -81,13 +77,14 @@ const Shop = ({
             className="form-select-sm form-select-sm"
             name="product_category_id"
             onChange={handleInput}
-          //value={productInput.product_category_id}
+            value={selectedCategory}
+
           >
             <option value="">Show all products</option>
             {categorylist.map((item) => {
               return (
-                <option defaultValue={1} value={item.id} key={item.id}>
-                  {item.name}{" "}
+                <option value={item.id} key={item.id} >
+                  {item.name}
                 </option>
               );
             })}
