@@ -14,7 +14,7 @@ const Dashboard = () => {
             chart: {
                 id: "pie",
             },
-            labels: ['AQUARIUMS ', 'FOOD', 'TECHNICAL PRODUCTS ', 'PLANTS ', 'ANIMALS '],
+            labels: ['LEPENKA ', 'KLIRIT 2mm', 'KLIRIT 3mm', 'LESONIT ', 'OSTALO '],
 
         },
         series: [
@@ -34,24 +34,24 @@ const Dashboard = () => {
         },
         series: [
             {
-                name: "AQUARIUMS",
+                name: "LEPENKA",
 
                 data: [],
             },
             {
-                name: "FOOD",
+                name: "KLIRIT 2mm",
                 data: [],
             },
             {
-                name: "TECHNICAL PRODUCTS",
+                name: "KLIRIT 3mm",
                 data: [],
             },
             {
-                name: "PLANTS",
+                name: "LESONIT",
                 data: [],
             },
             {
-                name: "ANIMALS",
+                name: "OSTALO",
                 data: [],
             },
         ],

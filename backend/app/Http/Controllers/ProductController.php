@@ -75,6 +75,7 @@ class ProductController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|min:5',
             'description' => 'required|string|min:10|max:3000',
+            'quantity' => 'required',
             'price' => 'required',
             'image' => 'required'
         ]);
@@ -90,9 +91,7 @@ class ProductController extends Controller
             'name' => $request->name,
             'description' => $request->description,
             'image' => $request->image,
-            'image2' => $request->image2,
-            'image3' => $request->image3,
-            'image4' => $request->image4,
+            'quantity' => $request->quantity,
             'price' => $request->price,
             'product_category_id' => $request->product_category_id,
         ]);
@@ -145,6 +144,7 @@ class ProductController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|min:5',
             'description' => 'required|string|min:10|max:3000',
+            'quantity' => 'required',
             'price' => 'required',
             'image' => 'required'
         ]);
@@ -160,9 +160,7 @@ class ProductController extends Controller
         $product->name = $request->name;
         $product->description = $request->description;
         $product->image = $request->image;
-        $product->image2 = $request->image2;
-        $product->image3 = $request->image3;
-        $product->image4 = $request->image4;
+        $product->quantity = $request->quantity;
         $product->price = $request->price;
         $product->product_category_id = $request->product_category_id;
 
@@ -200,6 +198,35 @@ class ProductController extends Controller
 
         return response()->json([
             'success' => true,
+        ]);
+    }
+
+    public function updateQuant(Request $request, $id)
+    {
+
+        $validator = Validator::make($request->all(), [
+
+            'quantity' => 'required',
+
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()
+            ]);
+        }
+
+        $product = Product::find($id);
+
+        $product->quantity = $request->quantity;
+
+
+        $product->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Successfully updated the product',
         ]);
     }
 }

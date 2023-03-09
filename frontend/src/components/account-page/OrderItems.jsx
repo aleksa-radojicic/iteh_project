@@ -8,7 +8,10 @@ import Spinner from "../contact-page/Spinner";
 
 const OrderItems = () => {
   let { id } = useParams();
+
+
   const [orderItems, setOrderItems] = useState(null);
+  // spanEl = useRef();
 
   //print pdf
   const componentRef = useRef();
@@ -25,6 +28,7 @@ const OrderItems = () => {
       .then((res) => {
         console.log(res);
         setOrderItems(res.data.order_items);
+
       })
       .catch((e) => {
         console.log(e.response.data);
@@ -32,67 +36,61 @@ const OrderItems = () => {
   }, [id]);
 
   return (
-    <><div ref={componentRef}>
-      <section className="orders container my-5 py-5" >
+    <>
 
-        <div className="container mt-5">
-          <h2 className="font-weight-bold text-center">Order details</h2>
-          <hr className="mx-auto" />
-        </div>
+      <div ref={componentRef}>
+        <section className="orders container my-5 py-5" >
 
-        <table className="mt-5 pt-5 mx-auto">
-          <tr>
-            <th>Product</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Subtotal</th>
-          </tr>
-          <tbody>
-            {orderItems == null ? (
-              <div className="abv">
-                <Spinner />
-              </div>
-            ) : (
-              orderItems.map((item) => {
-                return (
+          <div className="container mt-5">
+            <h2 className="font-weight-bold text-center">Order details</h2>
+            <hr className="mx-auto" />
+          </div>
 
+          <table className="mt-5 pt-5 mx-auto">
+            <tr>
+              <th>Product</th>
+              <th>Price</th>
+              <th>Quantity</th>
 
-
-                  <tr>
-                    <td>
-                      <div className="product-info">
-                        <img
-                          src={require("../../images/" + item.product.image)} alt="prodImage"
-                        />
-                        <div>
-                          <p className="mt-3">{item.product["name"]}</p>
-                        </div>
-                      </div>
-                    </td>
-
-                    <td>
-                      <span> ${item.price}</span>
-                    </td>
-
-                    <td>
-                      <span>{item.quantity}</span>
-                    </td>
-
-                    <td>
-                      <span>${item.quantity * item.price}</span>
-                    </td>
-
-                  </tr>
-
-                );
-              })
-            )}
-          </tbody>
-        </table>
+            </tr>
+            <tbody>
+              {orderItems == null ? (
+                <div className="abv">
+                  <Spinner />
+                </div>
+              ) : (
+                orderItems.map((item, index) => {
+                  // setTotal(total + (item.quantity * item.price));
+                  return (
 
 
-      </section>
-    </div><button className="btn-pdf" onClick={handlePrint}>Print order</button>
+
+                    <tr>
+                      <td>
+
+                        <p className="mt-3">{item.product["name"]}</p>
+
+                      </td>
+
+                      <td>
+                        <span> ${item.price}</span>
+                      </td>
+
+                      <td>
+                        <span>{item.quantity}</span>
+                      </td>
+
+                    </tr>
+
+                  );
+                })
+              )}
+            </tbody>
+          </table>
+
+
+        </section>
+      </div><button className="btn-pdf" onClick={handlePrint}>Print order</button>
     </>
   );
 };

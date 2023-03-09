@@ -39,7 +39,8 @@ function NavBar({ token, setToken, setLoggedUser }) {
         <Link to='/'>
           <img
             className="logo"
-            src={require("../../images/logo.jpg")}
+            src={require("../../images/logo krug.png")}
+            // src={require("../../images/wallpaper logo krug.png")}
             alt="logo"
           />
         </Link>

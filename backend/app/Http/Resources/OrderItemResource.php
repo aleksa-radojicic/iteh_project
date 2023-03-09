@@ -14,8 +14,8 @@ class OrderItemResource extends JsonResource
      */
     public static $wrap = 'order_item';
 
-    
-     public function toArray($request)
+
+    public function toArray($request)
     {
         return [
             'id' => $this->resource->id,

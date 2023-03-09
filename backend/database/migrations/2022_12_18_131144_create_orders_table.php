@@ -17,8 +17,9 @@ return new class extends Migration
             $table->id();
             $table->double('cost');
             $table->foreignId('user_id');
+            $table->foreignId('name');
+            $table->foreignId('surname');
             $table->string('user_phone');
-            $table->string('user_city');
             $table->string('user_address');
             $table->timestamps();
         });

@@ -20,7 +20,7 @@ import axios from "axios";
 import AllOrders from "./components/admin/order/AllOrders";
 import Footer from "./components/layouts/Footer";
 import NavBar from "./components/layouts/NavBar";
-
+import Bill from "./components/account-page/Bill";
 
 
 //number of products shown on a single page
@@ -47,14 +47,20 @@ function App() {
   const [cartItems, setCartItems] = useState([]);
 
   const onAddToCart = (product) => {
-    const exist = cartItems.find((x) => x.product.id === product.id);
+    console.log(product);
+    const exist = cartItems.find((x) => x.product.id === product.id & x.product.price === product.price);
+
     if (exist) {
       setCartItems(
+
         cartItems.map((x) =>
-          x.product.id === product.id
+          x.product.id === product.id & x.product.price === product.price
             ? {
               ...exist,
+
               price: product.price * (exist.quantity + 1),
+              // price: x.product.price !== product.price ? x.product.price + product.price * (exist.quantity) : product.price * (exist.quantity + 1),
+
               quantity: exist.quantity + 1,
             }
             : x
@@ -68,13 +74,13 @@ function App() {
     }
   };
   const onRemoveFromCart = (product) => {
-    const exist = cartItems.find((x) => x.product.id === product.id);
+    const exist = cartItems.find((x) => x.product.id === product.id & x.product.price === product.price);
     if (exist.quantity === 1) {
       setCartItems(cartItems.filter((x) => x.product.id !== product.id));
     } else {
       setCartItems(
         cartItems.map((x) =>
-          x.product.id === product.id
+          x.product.id === product.id & x.product.price === product.price
             ? {
               ...exist,
               price: product.price * (exist.quantity - 1),
@@ -244,6 +250,16 @@ function App() {
           }
         />
         <Route
+          path="/bill/:id"
+          element={
+            token != null ? (
+              <Bill />
+            ) : (
+              <Navigate to="/login/?please_log_in_first" />
+            )
+          }
+        />
+        <Route
           path="/cart"
           element={
             token != null ? (
@@ -276,7 +292,7 @@ function App() {
         {/* ----------------------------------------------------- */}
       </Routes>
 
-      <Footer />
+
       {/* ----------------------------------------------------- */}
     </BrowserRouter>
   );

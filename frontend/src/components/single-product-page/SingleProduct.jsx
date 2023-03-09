@@ -9,6 +9,19 @@ import Spinner from "../layouts/Spinner";
 
 const SingleProduct = ({ token, onAddToCart }) => {
   let navigate = useNavigate();
+  const INITIAL_FORM_STATE = {
+    length: 0,
+    wid: 0,
+  };
+
+  const [form, setForm] = useState(INITIAL_FORM_STATE);
+
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   //get id from url
   const { id } = useParams();
@@ -17,6 +30,8 @@ const SingleProduct = ({ token, onAddToCart }) => {
     axios
       .get("api/shop/product/" + id)
       .then((res) => {
+        console.log(res.data
+        );
         setProduct(res.data.product);
       })
       .catch((e) => {
@@ -31,7 +46,12 @@ const SingleProduct = ({ token, onAddToCart }) => {
 
   function addToCartTrigger() {
     console.log("okinut");
-
+    if (product.price < 50) {
+      product.price = 50;
+    }
+    if (product.price > 50 & product.price < 100) {
+      product.price = 100;
+    }
     if (token != null) {
       onAddToCart(product);
       navigate("/cart");
@@ -69,47 +89,152 @@ const SingleProduct = ({ token, onAddToCart }) => {
                     alt="img1"
                   />
                 </div>
-                <div className="small-img-col">
-                  <img
-                    src={require("../../images/" + product.image2)}
-                    width="100%"
-                    className="small-img"
-                    alt="img2"
-                  />
-                </div>
-                <div className="small-img-col">
-                  <img
-                    src={require("../../images/" + product.image3)}
-                    width="100%"
-                    className="small-img"
-                    alt="img3"
-                  />
-                </div>
-                <div className="small-img-col">
-                  <img
-                    src={require("../../images/" + product.image4)}
-                    width="100%"
-                    className="small-img"
-                    alt="img4"
-                  />
-                </div>
+
               </div>
             </div>
 
             <div className="col-lg-6 col-md-12 col-sm-12">
               <h3 className="py-4">{product.name}</h3>
-              <h2>{"$" + product.price}</h2>
+
+              <hr></hr>
+              <p>
+                {(() => {
+                  if (product.product_category.name === "Klirit 2mm" & form.length !== 0 & form.wid !== 0) {
+                    product.price = (1200 / 3400) * (form.length * form.wid);
+                    console.log(product.price);
+                    product.price = Math.round(product.price / 50) * 50;;
+                    return product.price;
+                  }
+                  else if (product.name.includes("Ogledalo") & form.length !== 0 & form.wid !== 0) {
+                    product.price = (2300 / 3400) * (form.length * form.wid);
+                    console.log(product.price);
+                    product.price = Math.round(product.price / 50) * 50;;
+                    return product.price;
+                  }
+                  else if (product.name.includes("Klirit Mat Beli 3mm") & form.length !== 0 & form.wid !== 0) {
+                    product.price = (1700 / 3400) * (form.length * form.wid);
+                    product.price = Math.round(product.price / 50) * 50;;
+                    return product.price;
+                  }
+                  else if (product.name.includes("Solid") & product.product_category.name === "Klirit 3mm" & form.length !== 0 & form.wid !== 0) {
+                    product.price = (1400 / 3400) * (form.length * form.wid);
+                    product.price = Math.round(product.price / 50) * 50;;
+                    return product.price;
+                  }
+                  else if (product.product_category.name === "Klirit 3mm" & product.name.includes("Klirit Providni") & form.length !== 0 & form.wid !== 0) {
+                    product.price = (1500 / 3400) * (form.length * form.wid);
+                    product.price = Math.round(product.price / 50) * 50;;
+                    return product.price;
+                  }
+                  else if (product.product_category.name === "Klirit 3mm" & form.length !== 0 & form.wid !== 0) {
+                    product.price = (1300 / 3400) * (form.length * form.wid);
+                    product.price = Math.round(product.price / 50) * 50;;
+                    return product.price;
+                  } else if (product.product_category.name === "Lesonit" & form.length !== 0 & form.wid !== 0) {
+                    product.price = (350 / 3500) * (form.length * form.wid);
+                    console.log(product.price);
+                    product.price = Math.round(product.price / 50) * 50;;
+                    return product.price;
+                  }
+
+
+
+                })()}
+              </p>
+
+
+
+
+
+              <h2>{product.price + " din"}
+
+              </h2>
+              <hr></hr>
+
               <button className="buy-btn" onClick={addToCartTrigger}>
                 Add To Cart
               </button>
               <h3>Product category</h3>
               <p>{product.product_category.name}</p>
-              <h4 className="mt-5 mb-5">Product details</h4>
+
+              <h4>Stanje: {product.quantity}</h4>
+              <div className="peace" >
+
+                <form id="bill-form" >
+                  <div className="form-group ">
+
+                    <label>Duzina</label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      onInput={handleChange}
+                      id="login-email"
+                      name="length"
+
+                      placeholder="duzina"
+                      value={form.length}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Sirina</label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      onInput={handleChange}
+                      id="login-password"
+                      name="wid"
+                      placeholder="sirina"
+                      required
+                      value={form.wid}
+                    />
+                  </div>
+
+
+                </form>
+
+              </div>
               <span>{product.description}</span>
             </div>
+
           </div>
 
-          <RelatedProducts />
+          {/* <div className="peace" >
+
+            <form id="bill-form" >
+              <div className="form-group ">
+
+                <label>Duzina</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  onInput={handleChange}
+                  id="login-email"
+                  name="length"
+
+                  placeholder="duzina"
+                  value={form.length}
+                />
+              </div>
+              <div className="form-group">
+                <label>Sirina</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  onInput={handleChange}
+                  id="login-password"
+                  name="wid"
+                  placeholder="sirina"
+                  required
+                  value={form.wid}
+                />
+              </div>
+
+
+            </form>
+
+          </div> */}
+
+          {/* <RelatedProducts /> */}
         </section>
       )}
     </>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\OrderCollection;
+use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
@@ -34,7 +35,8 @@ class OrderController extends Controller
         $validator = Validator::make($request->all(), [
             'cost' => 'required',
             'user_phone' => 'required|string|max:12',
-            'user_city' => 'required|string|max:30',
+            'name' => 'required|string|max:50',
+            'surname' => 'required|string|max:50',
             'user_address' => 'required|string|max:30',
             'order_items' => 'required',
         ]);
@@ -54,8 +56,9 @@ class OrderController extends Controller
             $order = Order::create([
                 'cost' => $request->cost,
                 'user_id' => $request->user_id,
+                'name' => $request->name,
+                'surname' => $request->surname,
                 'user_phone' => $request->user_phone,
-                'user_city' => $request->user_city,
                 'user_address' => $request->user_address,
             ]);
 
@@ -63,9 +66,9 @@ class OrderController extends Controller
                 OrderItem::create([
                     'order_id' => $order->id,
                     'product_id' => $order_item['product']['id'],
-                    'price' => $order_item['price'],
+                    'price' => $order_item['product']['price'],
                     'quantity' => $order_item['quantity'],
-                    
+
                 ]);
             }
             DB::commit();
@@ -80,5 +83,17 @@ class OrderController extends Controller
         ];
 
         return response()->json($result);
+    }
+
+    public function show($id)
+    {
+
+        $order = Order::find($id);
+
+        if ($order) {
+
+            return new OrderResource($order);
+        }
+        return response()->json('Order not found', 404);
     }
 }

@@ -141,6 +141,7 @@ const AllProducts = ({ addProductId }) => {
                         <td className="text-xs font-weight-bold">{item.name}</td>
                         <td className="text-xs font-weight-bold">{item.product_category == null ? "/" : item.product_category.name}</td>
                         <td className="text-xs font-weight-bold">{item.price}</td>
+                        <td className="text-xs font-weight-bold">{item.quantity}</td>
                         <td className="text-xs font-weight-bold"> <Link to={`editProduct/${item.id}`} className="btn btn-success btn-sm" onClick={() => { setID(item.id); }}>EDIT</Link></td>
                         <td className="text-xs font-weight-bold"> <button className="btn btn-danger btn-sm " onClick={() => { deleteProduct(item.id); }}>DELETE</button></td>
                     </tr>

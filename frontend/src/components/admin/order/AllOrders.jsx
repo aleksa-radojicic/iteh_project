@@ -102,10 +102,12 @@ const AllOrders = () => {
                     <tr>
                         <td className="text-xs font-weight-bold">{item.id}</td>
                         <td className="text-xs font-weight-bold">{item.cost}</td>
+                        <td className="text-xs font-weight-bold">{item.name}</td>
+                        <td className="text-xs font-weight-bold">{item.surname}</td>
                         <td className="text-xs font-weight-bold">{item.user_phone}</td>
-                        <td className="text-xs font-weight-bold">{item.user_city}</td>
+
                         <td className="text-xs font-weight-bold"> {item.user_address}</td>
-                        <td className="text-xs font-weight-bold">{item.date} </td>
+
                     </tr>
                 );
             });
@@ -126,10 +128,11 @@ const AllOrders = () => {
 
                                 <th className="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Order ID</th>
                                 <th className="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Cost</th>
+                                <th className="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Name</th>
+                                <th className="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Surname</th>
                                 <th className="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">User Phone</th>
-                                <th className="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">User City</th>
                                 <th className="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">User Address</th>
-                                <th className="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Date</th>
+
 
                             </tr>
                         </thead>

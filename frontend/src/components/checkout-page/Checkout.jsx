@@ -12,30 +12,36 @@ const Checkout = ({ cartItems, setCartItems, logged_user, setLoggedUser }) => {
   );
 
   const phoneEl = useRef();
-  const cityEl = useRef();
+
   const addressEl = useRef();
+  const nameEl = useRef();
+  const surnameEl = useRef();
 
   function handlePlaceOrder(e) {
     e.preventDefault();
 
     const user_phone = phoneEl.current.value;
-    const user_city = cityEl.current.value;
+    const user_name = nameEl.current.value;
     const user_address = addressEl.current.value;
+    const surname = surnameEl.current.value;
 
     const order = {
-      user_id: logged_user.id,
-      user_phone: user_phone,
-      user_city: user_city,
-      user_address: user_address,
       cost: totalPrice,
+      user_id: logged_user.id,
+      name: user_name,
+      surname: surname,
+      user_phone: user_phone,
+      user_address: user_address,
+
       order_items: cartItems,
     };
 
 
-    console.log(order);
-
+    // console.log(order);
+    console.log(cartItems);
     axios.post("api/orders", order)
       .then((res) => {
+        console.log(res);
         if (res.data.success === true) {
           console.log("Successfully created order.");
 
@@ -74,16 +80,41 @@ const Checkout = ({ cartItems, setCartItems, logged_user, setLoggedUser }) => {
   return (
     <>
       <Helmet>
-        <title>Aquarium Keep | Checkout</title>
+        <title>Katex Nalog Magacinu</title>
       </Helmet>
 
       <section className="my-5 py-5">
         <div className="container text-center mt-3 pt-5">
-          <h2 className="form-weight-bold">Checkout</h2>
+          <h2 className="form-weight-bold">Nalog za magacin</h2>
           <hr className="mx-auto" />
         </div>
         <div className="mx-auto container">
           <form id="checkout-form" onSubmit={handlePlaceOrder}>
+            <div className="form-group checkout-small-element">
+              <label>Name</label>
+              <input
+                type="name"
+                className="form-control"
+                id="user"
+                name="name"
+                placeholder="Ime "
+                required
+                ref={nameEl}
+              />
+            </div>
+            <div className="form-group checkout-small-element">
+              <label>Surname</label>
+              <input
+                type="text"
+                className="form-control"
+                id="checkout-city"
+                name="surname"
+                placeholder="Prezime"
+                required
+                ref={surnameEl}
+              />
+            </div>
+
             <div className="form-group checkout-small-element">
               <label>Phone</label>
               <input
@@ -96,18 +127,7 @@ const Checkout = ({ cartItems, setCartItems, logged_user, setLoggedUser }) => {
                 ref={phoneEl}
               />
             </div>
-            <div className="form-group checkout-small-element">
-              <label>City</label>
-              <input
-                type="text"
-                className="form-control"
-                id="checkout-city"
-                name="city"
-                placeholder="City"
-                required
-                ref={cityEl}
-              />
-            </div>
+
             <div className="form-group checkout-large-element">
               <label>Address</label>
               <input
@@ -121,7 +141,7 @@ const Checkout = ({ cartItems, setCartItems, logged_user, setLoggedUser }) => {
               />
             </div>
             <div className="form-group checkout-btn-container">
-              <p>Total price: ${totalPrice.toFixed(2)}</p>
+              <p>Total price: {totalPrice.toFixed()} din</p>
               <input
                 type="submit"
                 className="btn"

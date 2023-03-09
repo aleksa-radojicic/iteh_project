@@ -6,6 +6,7 @@ use App\Http\Controllers\OrderOrderItemController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductCategoryController;
+use App\Models\Order;
 use Illuminate\Support\Facades\Route;
 
 
@@ -58,3 +59,7 @@ Route::get('/shop', [ProductController::class, 'showProductsPerPage']);
 
 //used for pagination
 Route::get('/numofprod', [ProductController::class, 'showNumberOfProducts']);
+Route::post('/orders', [OrderController::class, 'store']);
+Route::get('/order/{id}', [OrderController::class, 'show']);
+Route::put('/productsQuan/{id}', [ProductController::class, 'updateQuant']);
+Route::get('/product/{id}', [ProductController::class, 'show']);

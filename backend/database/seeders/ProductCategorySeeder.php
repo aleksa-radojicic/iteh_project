@@ -20,27 +20,32 @@ class ProductCategorySeeder extends Seeder
         ProductCategory::insert([
             [
 
-                'name' => "Aquariums",
+                'name' => "Lepenka",
                 'created_at' => now(),
             ],
             [
 
-                'name' => "Food",
+                'name' => "Klirit 2mm",
                 'created_at' => now(),
             ],
             [
 
-                'name' => "Technical products",
+                'name' => "Klirit 3mm",
                 'created_at' => now(),
             ],
             [
 
-                'name' => "Plants",
+                'name' => "Lesonit",
                 'created_at' => now(),
             ],
             [
 
-                'name' => "Animals",
+                'name' => "Jelkica",
+                'created_at' => now(),
+            ],
+            [
+
+                'name' => "Ostalo",
                 'created_at' => now(),
             ],
         ]);

@@ -192,7 +192,7 @@ function EditProduct({ id }) {
 
 
                             <div className="row">
-                                <p>{picture}</p>
+
                                 <div className="col-md-4 form-group mb-3">
                                     <label>Price</label>
                                     <input required type="text" name="price" onChange={handleInput} value={productInput.price} className="form-control" />

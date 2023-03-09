@@ -19,14 +19,15 @@ class OrderResource extends JsonResource
 
     public function toArray($request)
     {
-        return[
-            'id' => $this->resource->id,
-            'cost' => $this->resource->cost,
-            'user_phone' => $this->resource->user_phone,
-            'user_city' => $this->resource->user_city,
-            'user_address' => $this->resource->user_address,
-            'date' => $this->resource->created_at,
-            'order_items' => new OrderItemCollection($this->resource->order_items) 
+        return [
+            'id' => $this->id,
+            'cost' => $this->cost,
+            'name' => $this->name,
+            'surname' => $this->surname,
+            'user_phone' => $this->user_phone,
+            'user_address' => $this->user_address,
+            'date' => $this->created_at,
+            'order_items' => new OrderItemCollection($this->order_items)
         ];
     }
 }

@@ -13,20 +13,20 @@ class ProductResource extends JsonResource
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
 
-    public static $wrap = 'product';
+    public static $wrap = 'order';
 
 
     public function toArray($request)
     {
         return [
-            "id" => $this->id,
-            "name" => $this->name,
-            "description" => $this->description,
-            "quantity" => $this->quantity,
-            "image" => $this->image,
-
-            "price" => $this->price,
-            "product_category" => new ProductCategoryResource($this->product_category),
+            'id' => $this->id,
+            'cost' => $this->cost,
+            'name' => $this->name,
+            'surname' => $this->surname,
+            'user_phone' => $this->user_phone,
+            'user_address' => $this->user_address,
+            'date' => $this->created_at,
+            'order_items' => new OrderItemCollection($this->order_items)
         ];
     }
 }

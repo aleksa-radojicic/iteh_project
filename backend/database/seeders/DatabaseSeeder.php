@@ -25,14 +25,14 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
-            ProductCategorySeeder::class,
-            UserSeeder::class,
-            // ProductSeeder::class,
+            // ProductCategorySeeder::class,
+            // UserSeeder::class,
+            ProductSeeder::class,
             // OrderSeeder::class,
             // OrderItemSeeder::class
         ]);
 
-        User::factory(1)->create();
-        Product::factory(1000)->create();
+        // User::factory(1)->create();
+        // Product::factory(1000)->create();
     }
 }

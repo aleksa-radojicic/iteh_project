@@ -17,11 +17,9 @@ axios.interceptors.request.use(function (config) {
 });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-// $(document).ready(function () {
-//     $(".dropdown-toggle").dropdown();
-// });
+
 root.render(
-    <App />
+  <App />
 );
 
 // If you want to start measuring performance in your app, pass a function
