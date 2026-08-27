@@ -22,57 +22,20 @@ class UserSeeder extends Seeder
 
         User::insert([
             [
-                'name' => 'Blagoje',
-                'email' => 'blagoje@',
-                'password' => Hash::make('blagoje'),
-                'user_type' => 'regular',
+                'name' => 'Admin',
+                'email' => 'admin@example.com',
+                'password' => Hash::make('admin'),
+                'user_type' => 'admin',
                 'remember_token' => Str::random(10),
                 'created_at' => now(),
                 'updated_at' => now()
 
             ],
             [
-                'name' => 'Vojihna',
-                'email' => 'vojihna@',
-                'password' => Hash::make('vojihna'),
+                'name' => 'User',
+                'email' => 'user@example.com',
+                'password' => Hash::make('user'),
                 'user_type' => 'regular',
-                'remember_token' => Str::random(10),
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'name' => 'Hrvatin',
-                'email' => 'hrvatin@',
-                'password' => Hash::make('hrvatin'),
-                'user_type' => 'regular',
-                'remember_token' => Str::random(10),
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-
-            [
-                'name' => "Milan",
-                'email' => "milan@",
-                'password' => Hash::make("milan"),
-                'user_type' => 'admin',
-                'remember_token' => Str::random(10),
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'name' => "Nebojsa",
-                'email' => "nebojsa@",
-                'password' => Hash::make("nebojsa"),
-                'user_type' => 'admin',
-                'remember_token' => Str::random(10),
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'name' => "Aleksa",
-                'email' => "aleksa@",
-                'password' => Hash::make("aleksa"),
-                'user_type' => 'admin',
                 'remember_token' => Str::random(10),
                 'created_at' => now(),
                 'updated_at' => now()
